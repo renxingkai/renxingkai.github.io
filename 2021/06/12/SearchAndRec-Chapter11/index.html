@@ -1,0 +1,100 @@
+<!DOCTYPE html><html lang="en"><head><meta name="generator" content="Hexo 3.9.0"><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="智能搜索和推荐系统第十一章--搜索应用实战"><meta name="keywords" content="search&amp;recommend"><meta name="author" content="CinKate"><meta name="copyright" content="CinKate"><title>智能搜索和推荐系统第十一章--搜索应用实战 | CinKate's Blogs</title><link rel="shortcut icon" href="/melody-favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.9.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.9.0"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css?version=1.9.0"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="dns-prefetch" href="https://hm.baidu.com"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?b77222dd6b9929f160b8a04fc8705337";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();</script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  hexoVersion: '3.9.0'
+} </script></head><body><canvas class="fireworks"></canvas><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="Toggle article">Toggle site</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-电商搜索系统的架构设计"><span class="toc-number">1.</span> <span class="toc-text">1 电商搜索系统的架构设计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-ES在搜索系统中的应用"><span class="toc-number">2.</span> <span class="toc-text">2 ES在搜索系统中的应用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3NLP在搜索系统中的应用"><span class="toc-number">3.</span> <span class="toc-text">3NLP在搜索系统中的应用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-商品数据排序算法研究"><span class="toc-number">4.</span> <span class="toc-text">4 商品数据排序算法研究</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-搜索排序的评价及优化"><span class="toc-number">5.</span> <span class="toc-text">5 搜索排序的评价及优化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-深度学习在搜索系统中的应用"><span class="toc-number">6.</span> <span class="toc-text">6 深度学习在搜索系统中的应用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-电商搜索系统中的SEM"><span class="toc-number">7.</span> <span class="toc-text">7 电商搜索系统中的SEM</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="http://imgsrc.baidu.com/forum/w%3D580/sign=f8de0e9b3e87e9504217f3642039531b/1c3bd133c895d143e395e57b77f082025baf0726.jpg"></div><div class="author-info__name text-center">CinKate</div><div class="author-info__description text-center">长笛一声人倚楼~</div><div class="follow-button"><a href="https://github.com/renxingkai">Follow Me</a></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">Articles</span><span class="pull-right">38</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">Tags</span><span class="pull-right">23</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">Categories</span><span class="pull-right">12</span></a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(http://p17.qhimg.com/d/_open360/fengjing0403/21.jpg)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">CinKate's Blogs</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a><a class="site-page" href="/about">About</a></span><span class="pull-right"></span></div><div id="post-info"><div id="post-title">智能搜索和推荐系统第十一章--搜索应用实战</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2021-06-11</time><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/搜索-推荐/">搜索&amp;推荐</a><div class="post-meta-wordcount"><span>Word count: </span><span class="word-count">5.7k</span><span class="post-meta__separator">|</span><span>Reading time: 16 min</span></div></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><h3 id="1-电商搜索系统的架构设计"><a href="#1-电商搜索系统的架构设计" class="headerlink" title="1 电商搜索系统的架构设计"></a>1 电商搜索系统的架构设计</h3><p>在电商领域，一个完整的搜索系统的设计需要多年的经验和对整个领域的认知。下面先给出一个搜索系统架构示例，如下图所示。<br><img src="https://rxk-1300064984.cos.ap-nanjing.myqcloud.com/img/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20210611103028.png" alt></p>
+<p>对于电商公司来说，网站索引商品的量大概在百万级别，因此要求搜索引擎既要搜得准，又要搜得全。搜得准能够提升客户满意度，减少客户流失；搜得全能够给商品带来更多的曝光度，提高转化率。二者最终目的都是要提高用户转化率。下图是电商搜索引擎的架构。</p>
+<p><img src="https://rxk-1300064984.cos.ap-nanjing.myqcloud.com/img/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20210611103202.png" alt></p>
+<p>通常，搜索系统可以做以下几方面优化。</p>
+<p>1）做好联想输入。好的联想输入能够帮助客户快速找到自己想要的搜索词，不需要输入完整词汇，只需要输入首字母，或者输入拼音就可以快速定位搜索词，进而快速找到自己想要的商品。这种方式可以提升用户满意度，提高转化率。</p>
+<p>2）做好分词。分词是搜索中比较重要的一环，是构成倒排索引的基础。分词相对单字索引能够减少索引量，提高统计排序的灵活性。</p>
+<p>3）做好纠错。用户在使用搜索时，难免会输入错误，这时候就要对输入进行纠错。我们通常会采用两种纠错方式：一种是固定纠错法，即统计客户输入的词语，找到错误率比较高的词语，以及一些有歧义的词语，并固定设置遇到此类词语就转成纠错词去查询；另一种是拼音纠错法，即对经常输入错误的词语提取拼音，对同音词按照搜索频率排序提示给客户。</p>
+<p>4）做好对搜索无结果时的推荐。对于电商搜索来说，搜索无结果经常出现，比如客户输入错误或者没有客户想要的东西，如果仅仅给客户展示白屏，那就相当于放弃了该客户，所以针对这种情况，应有针对性地做一些推荐，比如可以采用查询扩展和用户意图识别的方法来解决。</p>
+<p>5）做好商品排序。排序是整个搜索过程比较重要的一个过程。通常，我们可以将排序过程分为几个阶段，在每一个阶段完成一项重要的任务，并在整个排序过程关注转化率。</p>
+<p>6）做好搜索业务的支撑平台，比如训练、标注、监控、算法管理与发布等。训练平台提供专门的训练环境，供算法工程师使用；标注平台给运营人员提供专门标注的地方，同时将这些系统打通，实现自动化管理，为后续算法上线提供系统化管理。</p>
+<p>7）关注系统性能，提高系统的响应能力及吞吐能力。我们要对系统高并发能力有一定的预判，尽量做好相关预案。线上系统要能经受“双11”这种大型促销活动的考验。</p>
+<h3 id="2-ES在搜索系统中的应用"><a href="#2-ES在搜索系统中的应用" class="headerlink" title="2 ES在搜索系统中的应用"></a>2 ES在搜索系统中的应用</h3><p>首先，我们应该知道为什么选择ES？在构建搜索引擎时，我们通常优先考虑开源的搜索引擎，因为完全自研成本会很高。选择ES的依据是它是一款分布式、高可用的搜索引擎，并且面向文本存储，存储的数据格式是JSON，方便通用。ES不用限制其内部的Schema，插件丰富，而且支持一些机器学习算法。</p>
+<p>对于电商领域来讲，第一步是搜索引擎的选择；第二步是看数据，一般是从大数据中搜索数据，通过分析数据解决转化率低的问题；第三步需要实现实时数据的同步，数据的增删改等操作都需要在搜索引擎中实现同步，原始数据也需要实时同步到搜索引擎中；第四步就是实现用户访问。</p>
+<p>在使用ES的过程中，也有一些值得注意的地方。对于分布式系统，其会将数据分布到多台机器或者多个节点。查询请求发出后，系统会通过总调度将数据分流到对应的分片上。ES在创建索引的时候就可以指定分片数，如果只指定一个节点会出现数据倾斜的现象，也不利于充分利用机器，因此一般会依据机器数量来指定分片数。查询时需要从每个分片中找到满足对应查询条件的数据，然后在总调度中汇聚。例如，要查询100条数据，需要在分片中查询100次数据，最后在总调度中汇聚成400条数据，再从这400条数据依据优先级取前100条数据，返回到客户端。分片数越多查询效率越低，但是写的性能会提升。在设置分片数量时，我们需要依据业务需求设定。如果分片主要用于读操作就将分片数设置得少一些，如果是写操作就根据数据量匹配分片数，达到最大存储量。</p>
+<p>在使用ES的过程中，笔者的一些经验和教训如下。</p>
+<p>1）硬件必须要强。公司应尽量使用SSD（固态硬盘），因为SSD读取速度快，能够提升I/O吞吐量。对于高并发情况，内存条主频应尽量保持一致；内存条主频不一致可能使系统运行变慢。</p>
+<p>2）索引不能只依靠磁盘，即使是SSD，查询一次的代价也是昂贵的。对于高并发，ES会加载索引到堆外内存，包括倒排索引、正排索引、向量信息。整个查询过程会使用堆外内存查询。如果堆外内存不存在索引，再去磁盘查询，同时写入堆外内存；如果堆外内存已满，ES会替换掉一些不常用的索引。需要注意的是，我们应该把服务器交换分区关掉，否则内存满了会使用磁盘，使系统性能大幅下降。如果有条件，我们可以把所有文件加载到JVM内存，这样查询会更快，但如果JVM内存故障，要保证对刚更新的内存索引进行备份。</p>
+<p>3）预热。为了把索引文件充分加载到堆外内存，我们可以把系统需要使用的词典文件加载到JVM内存。</p>
+<p>4）注意ES缓存设计。ES缓存分为三种：查询缓存、请求缓存、数据结构的缓存。在设计ES缓存的时候，要注意缓存大小的设置。如果设置得过小，缓存命中率可能比较低，起不到效果；如果设置得过大，可能会导致垃圾回收时间过长。我们可以根据索引大小以及机器配置适当调整缓存大小。</p>
+<p>5）建议禁用Source字段。因为开启Source字段，ES会在返回结果时根据查询到的文档ID，找到对应的文档信息，将JSON反序列化成结果对象，这个过程比较消耗CPU。</p>
+<p>6）合并段。ES在查询过程中对每一个段都要根据输入词查询一次索引，这个过程会涉及I/O或者堆外内存的交互。ES在每次提交结果时都会生成一个段文件，如果段文件非常多会导致多次循环，严重影响性能，因此可以合并成一个段去请求。但是要注意，段合并非常消耗CPU，建议不要在服务高峰期合并段。</p>
+<h3 id="3NLP在搜索系统中的应用"><a href="#3NLP在搜索系统中的应用" class="headerlink" title="3NLP在搜索系统中的应用"></a>3NLP在搜索系统中的应用</h3><p>NLP在搜索系统中的应用主要包括：搜索意图识别、查询理解、网页内容理解、搜索排序、相关推荐等。排序是一个比较大的专题，这里先看看NLP在搜索系统中的应用。</p>
+<p>查询理解的任务是最经典的关于NLP在搜索场景中的应用，主要通过对海量的查询日志、点击反馈日志进行数据挖掘。查询理解任务主要包括中文分词、新词发现、词性标注、句法分析、同义词挖掘、拼写纠错、查询扩展、查询改写等。这些知识点在第4章和第5章也有一定程度的总结和梳理。毫不夸张地说，查询理解是搜索场景中的灵魂。</p>
+<p>当然，查询理解也有一些技术上的挑战。比如，针对长尾关键词查询，如果用基于规则的方式处理，工作量大；如果用机器学习的方式处理，没有足够的样本支持。另外，从技术实现角度看，真正做到语义上的召回也是非常有挑战的。</p>
+<p>NLP在查询理解上的应用如下图所示。<br><img src="https://rxk-1300064984.cos.ap-nanjing.myqcloud.com/img/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20210611201303.png" alt></p>
+<p>下图是基于电商的搜索逻辑设计示意图。从图中可以看出，搜索逻辑可以在查询扩展的基础上进行各种演变。这样做的目的是丰富查询条件，并且加强对查询的语义理解。</p>
+<p><img src="https://rxk-1300064984.cos.ap-nanjing.myqcloud.com/img/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20210611201506.png" alt></p>
+<p>下面再举一个“猜你喜欢”逻辑设计示意图，如下图所示。如何让搜索引擎能够“猜”到用户的兴趣点是该功能逻辑设计的主要目的。当然让搜索引擎具有“猜”的功能在技术层面上也是比较有挑战的。首先要分析用户的查询内容以及用户的查询行为。用户查询内容的分析可以通过对查询条件进行分析。用户查询行为一般需要经过大数据的统计分析，挖掘用户深层次的需求。</p>
+<p><img src="https://rxk-1300064984.cos.ap-nanjing.myqcloud.com/img/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20210611201628.png" alt></p>
+<h3 id="4-商品数据排序算法研究"><a href="#4-商品数据排序算法研究" class="headerlink" title="4 商品数据排序算法研究"></a>4 商品数据排序算法研究</h3><p>随着我国经济与互联网技术的飞速发展，电商平台上商品的种类也急剧增加。如何让用户在最短的时间内便捷地找到自己感兴趣的商品，并且对商品有效排序已经成为每一个电商平台必须面对的问题。</p>
+<p>在开始讨论排序算法之前，我们先回顾一下电商平台数据的运作流程，这对于合理地使用排序算法是尤为重要的。如果说排序是将现有的结果按照用户感兴趣的程度由高到低排列，那么用户当前的兴趣和召回数据的极限范围就是排序算法的重要依据。</p>
+<p>首先，对于确定用户兴趣，我们通常会选择使用用户画像、用户行为以及热点推荐的方式来综合评价。其次，我们还要确定用户的最近行为反映出了用户的哪些特质，如性格、爱好等。最后，我们需要确定最近热门的商品，这些商品中有哪些可能和当前用户的兴趣强相关。基于这三步，最终产出优质的召回数据。</p>
+<p>对于用户当前兴趣的确定，我们可以将不同的属性按照其内部的互异性、分割后的特质所含样本数量，以及样本时效性等维度进行分析。首先是获取用户基本属性，可以依据用户长期以来在平台上产生的数据获得。这里需要格外注意网格的大小。如果把用来确定用户基本属性的每一个特征当作一个维度，那么由性别和收入特征产生的简单网格可以是2×X，其中X是收入的划分间隔，而2是性别的划分。具体要收纳多少个特征作为基础维度，而每一个特征又要如何分割，这既要考虑每一个特征分割后的区分性或者说互异性，又要考虑网格内用户的数量。</p>
+<p>比如，给0～1岁、1～3岁、3～5岁与5～8岁的孩子在选择教育的时候，其目标商品是有明显区别的。那么在当前电商场景下，就可以将其细分到不同的子分类上，然后根据用户的数量确定维度，例如，如果当前1～3岁的男孩数量较少，那么可以酌情删除当前分割的年龄区间或与其他近似特征分割后的区间进行合并。</p>
+<p>关于时效性，我们可以分为两个不同的维度：用户侧的时效性以及商品侧的时效性。这里我们先以用户侧的时效性举例。一个18岁的用户在5～6月的时候感兴趣的商品可能是《三年真题五年模拟》。而2个月后，他还会对于这些商品感兴趣吗？如果我们能确定他是一位高三考生，那么2个月后，他对这种商品的兴趣度就会下降。</p>
+<p>这里是对基础数据准备的简单样例的讲解。对于召回数据的理解也同样如此。召回数据的理解是建立在平台总体情况与当前页面情况基础之上的。在不考虑商业逻辑的前提下，我们首先要清楚当前页面在当前平台上到底会召回哪些范围的数据，它们又包含哪些特征，这些特征在接下来的排序阶段是否可用，等等。</p>
+<p>下一步我们进入模型的选择。无论是复杂度较低的规则排序，还是排序算法模型，首先要权衡的是算法的性能。很简单的一个逻辑就是保证用户体验。除了参考性能指标之外，很多时候我们优先选择可解释性强的模型，即模型本身对于排序结果的计算方式是易于理解的，比如规则模型、逻辑回归模型、树模型及其部分衍生模型等。对于如何选择合适的模型去满足不同的需求，就需要大家对于模型本身的数学逻辑和应用场景等有着更深入的理解，这里就不再过多赘述了。</p>
+<p>而当确定了模型后，我们就需要考虑评估模型性能和优化模型。</p>
+<h3 id="5-搜索排序的评价及优化"><a href="#5-搜索排序的评价及优化" class="headerlink" title="5 搜索排序的评价及优化"></a>5 搜索排序的评价及优化</h3><p>搜索排序方法的评价在前面章节中已经做了详细描述。这里需要讲的是具体指标的选取和实验方法。在算法实现阶段，每一个模型都是单一目标的实现。但是，由于业务场景的需要，线上评估有可能是多目标融合结果的评估。</p>
+<p>离线实验对搜索排序的评价主要侧重两个方面：效率评价和效果评价。效率评价一般是指搜索系统在响应时间和空间消耗方面的评估。一个系统的响应时间受诸多因素的影响：硬件、数据量、数据结构等。对于搜索排序模型，我们要根据实际应用场景对模型进行选择，按照系统能够给出的时间限度，选择具有合适的复杂度的模型、特征等。对于搜索系统而言，不同的文档存储结构所用内存区别较大，如正排索引和倒排索引所需内存空间不同，布尔检索和正文检索所需内存空间也不同。</p>
+<p>效果评价是对模型排序后的结果进行评价，即对比排序结果和标准结果的差异。评估指标包括：准确率、召回率、F值、平均准确率以及nDCG指标等。准确率描述最终的推荐列表中有多少比例是发生过的用户–物品评分记录；召回率描述有多少比例的用户–物品评分记录包含在最终的列表结果中；F值是同时考虑准确率和召回率的综合指标，使用调和平均数的计算方式强调较小值的重要性；平均准确率考虑到相关文档的位置信息，在召回率从0到1逐渐提高的过程中，对每个相关文档位置上的准确率进行相加；在关注排序靠前的评价指标中，使用最多的是nDCG指标，其对文档的相关度进行多种等级的打分，同时综合考虑文档的位置信息。</p>
+<p>ROC曲线是解决正负样本比例不均衡以及分类阈值选择的一种方法。下图中有三条ROC曲线，我们可以通过AUC对其进行量化。AUC为ROC曲线下半部分的面积。AUC越大，模型效果越好。<br><img src="https://rxk-1300064984.cos.ap-nanjing.myqcloud.com/img/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20210611202721.png" alt></p>
+<h3 id="6-深度学习在搜索系统中的应用"><a href="#6-深度学习在搜索系统中的应用" class="headerlink" title="6 深度学习在搜索系统中的应用"></a>6 深度学习在搜索系统中的应用</h3><p><strong>1.将深度学习应用于“扫一扫”功能</strong></p>
+<p>谈到深度学习最成功的应用莫过于在图像与语音方面的应用了。在搜索框上的“扫一扫”功能正是利用了图像识别技术，这颠覆了传统的以文字作为输入的方式。</p>
+<p><strong>2.将深度学习用于搜索引擎的召回和排序阶段</strong></p>
+<p>在召回阶段，我们可以利用序列标注模型进行查询理解的分析工作，也可以利用Fasttext或者其他模型进行意图识别。在排序阶段，我们可以使用DSSM模型，也可以使用其他深度学习模型。另外，我们还可以通过深度学习模型主动学习特征，利用深度学习自动扩展查询条件，等等。</p>
+<h3 id="7-电商搜索系统中的SEM"><a href="#7-电商搜索系统中的SEM" class="headerlink" title="7 电商搜索系统中的SEM"></a>7 电商搜索系统中的SEM</h3><p>搜索引擎营销（Search Engine Marketing，SEM）简单地说就是基于搜索平台的营销方法，主要分为自身调整和外部购买。为了提高商品曝光度，我们会考虑通过一些手段提高商品的召回率，这就是我们常说的SEM。与SEM相关的还有SEO和手机平台的ASM和ASO。</p>
+<p>比如，我们在应用商店单纯地搜索“淘宝”，可以看到很多与“淘宝”不太相关的内容，如“唯品会”和“美团”等。阅读“美团”的内容发现，美团在内容中有描述：“相关应用：大众点评、百度糯米、饿了么、淘宝、京东……”。</p>
+<p>在尝试了所有相关App的搜索之后，我们发现美团或多或少地存在于相关的搜索结果中，所以猜测“美团”App在内容描述上极大概率地应用了SEM。当然由于商业保密等，我们无法知道应用商店具体使用的是什么样的搜索策略。由苹果官方公布的影响搜索结果的因素可知：搜索结果只与用户行为和文本相关性有关。</p>
+<p>再比如，下图所示为SensorTower提供的2017年5～8月游戏与非游戏App下载来源比例。我们可以发现来自搜索的比例要远远大于来自推荐的比例。2018年，随着应用商店的大规模改版，也有人称搜索比重有所下降。就现在情况来看，应用商店中App下载来源依旧主要依赖于搜索。而考虑到应用商店所提供的搜索服务，ASO主要是通过对搜索规则的解析尽可能地提高召回率，进而提高App曝光度。</p>
+<p><img src="https://rxk-1300064984.cos.ap-nanjing.myqcloud.com/img/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20210611203125.png" alt></p>
+<p>下图是在京东搜索“手机”的SEM结果，我们能清晰地看到在结果的右下角有一个广告的标记。这也是我们常见的一种基于电商平台的SEM方法，即置顶。当产品方购买了相关热词之后，与当前用户搜索内容相关的结果展示中一定会展示这类购买了“置顶”广告的产品。这类SEM其实是一种流量出售的方式。通常，一件商品的购买量在存量充足的情况下，我们可以简单地理解为：购买量=流量×浏览系数×服务系数×商品本身属性。以这个公式为例，我们看出商品的购买量除了与商品本身的属性有关，还与商品的曝光量即流量和商家的服务有关。这也是现代商品社会中广告基于搜索平台的一种新型表达。</p>
+<p><img src="https://rxk-1300064984.cos.ap-nanjing.myqcloud.com/img/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20210611203247.png" alt></p>
+<p>流量购买型的SEM方式也是多种多样的，不仅限于置顶一种，还有系数调整方法。而在搜索排序中，所有的SEM策略统称为商业策略。</p>
+<p>前面的章节讲解搜索排序的时候讲到，展示给用户的最终排序结果应该是经过模型排序之后再依照商业逻辑调整之后的结果。所以，SEM策略应该独立于整个排序结果之外，但又与搜索结果相关。通常，SEM有两种策略，即添加和重排。添加即将与当前搜索内容相关但不存在于当前结果中的数据强行添加至排序结果的预设位置。值得注意的是，添加的内容是否与搜索内容相关是需要仔细斟酌的。在一些搜索平台中，平台自身可能允许SEM购买方选择关键词或热词。在这种情况下，只要热词与添加内容相关就会触发SEM规则。如果没有控制好SEM购买方选择的热词，同时在关系判断时又过于简单地依赖于热词，很有可能损失当前排序结果的精度。</p>
+<p>相比于添加，重排的方法会显得更温和，也更有可能保证搜索排序的精度。同时，就商业逻辑而言，重排效果可能不如添加方法，主要表现在受众和价格上。因此，如何选择合适的SEM方法与触发SEM规则，就成了SEM最重要的考验。常见广告位、专题推送后台逻辑如下图所示。</p>
+<p><img src="https://rxk-1300064984.cos.ap-nanjing.myqcloud.com/img/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20210611203416.png" alt></p>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">CinKate</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://renxingkai.github.io/2021/06/12/SearchAndRec-Chapter11/">http://renxingkai.github.io/2021/06/12/SearchAndRec-Chapter11/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/search-recommend/">search&amp;recommend</a></div><div class="social-share pull-right" data-disabled="google,facebook"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script><nav id="pagination"><div class="next-post pull-right"><a href="/2021/06/11/SearchAndRec-Chapter10/"><span>智能搜索和推荐系统第十章--搜索引擎工具</span><i class="fa fa-chevron-right"></i></a></div></nav></div></div><footer class="footer-bg" style="background-image: url(http://p17.qhimg.com/d/_open360/fengjing0403/21.jpg)"><div class="layout" id="footer"><div class="copyright">&copy;2019 - 2021 By CinKate</div><div class="framework-info"><span>Driven - </span><a href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>Theme - </span><a href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="footer_custom_text">Hi, welcome to my <a href="https://renxingkai.github.io">blog</a>!</div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file-o"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.9.0"></script><script src="/js/fancybox.js?version=1.9.0"></script><script src="/js/sidebar.js?version=1.9.0"></script><script src="/js/copy.js?version=1.9.0"></script><script src="/js/fireworks.js?version=1.9.0"></script><script src="/js/transition.js?version=1.9.0"></script><script src="/js/scroll.js?version=1.9.0"></script><script src="/js/head.js?version=1.9.0"></script><script type="text/x-mathjax-config">MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+    processEscapes: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+  },
+  CommonHTML: {
+    linebreaks: { automatic: true, width: "90% container" }
+  },
+  "HTML-CSS": { 
+    linebreaks: { automatic: true, width: "90% container" }
+  },
+  "SVG": { 
+    linebreaks: { automatic: true, width: "90% container" }
+  }
+});
+</script><script type="text/x-mathjax-config">MathJax.Hub.Queue(function() {
+  var all = MathJax.Hub.getAllJax(), i;
+  for (i=0; i < all.length; i += 1) {
+    all[i].SourceElement().parentNode.className += ' has-jax';
+  }
+});
+</script><script src="https://cdn.jsdelivr.net/npm/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css"><script src="/js/katex.js"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script></body></html>
