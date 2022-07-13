@@ -1,0 +1,119 @@
+<!DOCTYPE html><html lang="en"><head><meta name="generator" content="Hexo 3.9.0"><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="智能搜索和推荐系统第十二章--推荐应用实战：基于广告平台的推荐"><meta name="keywords" content="search&amp;recommend"><meta name="author" content="CinKate"><meta name="copyright" content="CinKate"><title>智能搜索和推荐系统第十二章--推荐应用实战：基于广告平台的推荐 | CinKate's Blogs</title><link rel="shortcut icon" href="/melody-favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.9.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.9.0"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css?version=1.9.0"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="dns-prefetch" href="https://hm.baidu.com"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?b77222dd6b9929f160b8a04fc8705337";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();</script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  hexoVersion: '3.9.0'
+} </script></head><body><canvas class="fireworks"></canvas><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="Toggle article">Toggle site</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-推荐系统的架构设计"><span class="toc-number">1.</span> <span class="toc-text">1 推荐系统的架构设计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-推荐系统的召回和冷启动"><span class="toc-number">2.</span> <span class="toc-text">2　推荐系统的召回和冷启动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-ES在推荐系统中的应用"><span class="toc-number">3.</span> <span class="toc-text">3 ES在推荐系统中的应用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-推荐系统中NLP的应用"><span class="toc-number">4.</span> <span class="toc-text">4 推荐系统中NLP的应用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-推荐系统中粗排和精排"><span class="toc-number">5.</span> <span class="toc-text">5 推荐系统中粗排和精排</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-推荐系统的评价和优化"><span class="toc-number">6.</span> <span class="toc-text">6　推荐系统的评价和优化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-深度学习在推荐系统应用"><span class="toc-number">7.</span> <span class="toc-text">7 深度学习在推荐系统应用</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="http://imgsrc.baidu.com/forum/w%3D580/sign=f8de0e9b3e87e9504217f3642039531b/1c3bd133c895d143e395e57b77f082025baf0726.jpg"></div><div class="author-info__name text-center">CinKate</div><div class="author-info__description text-center">长笛一声人倚楼~</div><div class="follow-button"><a href="https://github.com/renxingkai">Follow Me</a></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">Articles</span><span class="pull-right">48</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">Tags</span><span class="pull-right">31</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">Categories</span><span class="pull-right">17</span></a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(http://p17.qhimg.com/d/_open360/fengjing0403/21.jpg)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">CinKate's Blogs</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a><a class="site-page" href="/about">About</a></span><span class="pull-right"></span></div><div id="post-info"><div id="post-title">智能搜索和推荐系统第十二章--推荐应用实战：基于广告平台的推荐</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2021-06-12</time><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/搜索-推荐/">搜索&amp;推荐</a><div class="post-meta-wordcount"><span>Word count: </span><span class="word-count">5k</span><span class="post-meta__separator">|</span><span>Reading time: 14 min</span></div></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><p>广告是为了达到某种特定的目的，向公众传递信息的宣传手段。广告对每一个企业业务的增长起到了举足轻重的作用。本章将介绍基于广告平台的推荐实践经验。</p>
+<h3 id="1-推荐系统的架构设计"><a href="#1-推荐系统的架构设计" class="headerlink" title="1 推荐系统的架构设计"></a>1 推荐系统的架构设计</h3><p>广告是互联网公司流量商业变现的主要形式，是由多方参与主体共同完成的一项商业营销活动。计算广告的核心问题是在给定的一系列上下文环境中，去寻求最合适的广告投放策略，从而实现广告价值最大化。广告涉及的三方包括平台、用户以及广告主。</p>
+<p>从技术实现角度来讲，广告更偏推荐技术，但从本质上讲是将推荐和搜索技术完美统一。总体来说，广告平台需要均衡三方利益，推荐系统则需要更多关注用户体验。举一个简单的例子，同样使用CTR预估模型，对于广告平台，其可能更多是从收益出发，排序的最终结果也是为了最大化收益；对于推荐系统，除了关注排序结果，还需要在评价体系中评估用户体验，比如推荐结果的惊喜度、新颖性等。下图是将搜索、推荐、广告三者统一的架构设计。<br><img src="https://rxk-1300064984.cos.ap-nanjing.myqcloud.com/img/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20210612110934.png" alt></p>
+<p>另一方面，推荐更多是一种技术，而广告是一种业务。个性化推荐可以用在广告中，也可以用在其他产品中，只是计算广告的一个环节。个性化推荐不能等同于机器学习，因为从推荐系统实现的角度来看，我们可以使用机器学习也可以使用其他技术和策略。但是广告系统一般会使用机器学习。下表从不同维度说明了搜索、推荐以及广告的异同之处。<br><img src="https://rxk-1300064984.cos.ap-nanjing.myqcloud.com/img/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20210612111103.png" alt></p>
+<p>所以，广告系统的架构和推荐系统的架构有类似的地方，也有些许区别。下图是一个简单的DSP广告系统架构，图中箭头表示数据流的走向，1是收到一个广告展示请求，8是发出针对此次请求的出价、广告创意等。<br><img src="https://rxk-1300064984.cos.ap-nanjing.myqcloud.com/img/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20210612111210.png" alt></p>
+<p>其中，枢纽、检索模块和排序模块是广告系统的核心，特征计算系统、计费系统和投放系统是辅助模块。</p>
+<p>枢纽：对外提供HTTP服务，接收请求后，依次与特征计算系统、检索模块、排序模块交互，最后返回出价和广告创意等。</p>
+<p>检索模块：解决相关性问题，检索出与用户查询相关性较高的广告。相关性较低的广告会影响用户体验和广告效果。</p>
+<p>排序模块：解决收益最大化问题，在约束下最大化收益。特征计算系统：实时计算场景（媒体、广告位、上下文、设备等）曝光度、用户的特征，并向其他模块提供实时查询支持。</p>
+<p>计费系统：实时处理曝光后媒体返回的数据，以及其他点击、转化等数据，并计算广告费用、剩余预算等。</p>
+<p>投放系统：供广告主设置定向条件、创意等，是广告主直接交互的系统。</p>
+<p>下图是微博广告架构，基本的广告系统具有类似的框架体系。<br><img src="https://rxk-1300064984.cos.ap-nanjing.myqcloud.com/img/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20210612111418.png" alt></p>
+<h3 id="2-推荐系统的召回和冷启动"><a href="#2-推荐系统的召回和冷启动" class="headerlink" title="2　推荐系统的召回和冷启动"></a>2　推荐系统的召回和冷启动</h3><p>广告平台关于广告的两种思考方式：当前推荐的广告的优劣以广告收益为评价标准，还是以用户体验为评价标准。注重广告收益的策略，在推荐广告时会更关注广告人均点击、推广人数等指标。这些指标能有效识别当前推荐的广告是否与用户相匹配。注重用户体验的策略其实更关注广告平台的用户留存。这样看，广告平台其实更像是一个推荐系统。注重广告收益的策略，可能会发生重复推荐同一条广告给一个用户的情况，因此我们应在最大化商业利益的前提下，合理制定触达方式。所以，广告平台应该平衡好广告收益和用户体验。</p>
+<p>再回到推荐系统的冷启动策略。前文已经介绍了一些推荐系统冷启动的基本解决方法。在计算广告中，解决冷启动问题通常还有两种方法：一种是利用强化学习的方法。这类方法通常将冷启动问题转化为多臂赌博机问题进行解决，根据用户对广告的反馈，不断调整系统推荐广告的策略。另一种是利用推荐系统中基于内容的推荐方法。这类方法利用用户的描述信息，比如用户的年龄、性别、地理位置、工作、爱好等信息，给用户推荐相应的广告。传统的解决冷启动问题的方法通常在为用户推荐过程中需要进行大量的计算，非常耗时。如何降低推荐过程中计算的复杂度，是我们持续保持关注和待解决的问题。</p>
+<p>以Google的广告平台为例，它是业内少数能将多方利益平衡好的公司之一。首先，我们先看看Google广告平台的整体运作逻辑。对于每一个想要加入GA（Google Adwords）平台的广告主来说，GA会要求客户以组为单位，提供相应的广告并选择合适的热词、地区范围等相关信息，以便通过最基本的标签信息获得足够的内容支持。下图展示的是在Google中搜索video games时，右侧出现的与video games相关的广告及其推荐原理解释。我们可以发现Google在冷启动召回时，为了保证搜索界面信息的准确，召回广告主要采用基于关键词的方法。这也是我们之前在广告提供商处提到的提交的相关信息。当在短时间内反复搜索video games，除了第一次之外，并没有再看到广告。由此可见对于非注册用户，GA平台的冷启动广告推荐具有时效性。</p>
+<p><img src="https://rxk-1300064984.cos.ap-nanjing.myqcloud.com/img/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20210612111907.png" alt></p>
+<p>再举一个360广告系统召回的例子，召回模块先初步选出广告候选集，然后进入过滤模块，最后进入排序阶段。过滤方法主要包括基于规则、黑白名单、预算控制。在排序阶段，粗排模块对初选的广告候选集按评价函数模型进行打分，但没有精排模块那么复杂，相对比较简单。召回过程中使用的方法如下图所示。</p>
+<p><img src="https://rxk-1300064984.cos.ap-nanjing.myqcloud.com/img/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20210612112013.png" alt></p>
+<p>上下文召回包括以下三种类型，第一种是基于图片的，即将图片向量化，通过计算广告商品与图片向量的相似度进行召回；第二种是基于标题的，主要是基于文本分类模型进行召回；第三种是基于位置的，广告主自身设定某个标签区域进行投放，在该区域内进行标签匹配召回。</p>
+<p>用户行为召回有以下三种类型，第一种是基于兴趣的，即基于用户历史行为建立用户画像，形成兴趣标签，属于布尔召回；第二种是基于查询的，根据用户的历史查询行为，通过NLP相关模型进行召回；第三种是基于访问行为的，利用广告主回传的用户行为，采用Item CF、ALS、Neural MF等模型进行召回。</p>
+<p>深度召回主要是把人群属性、群体特征、上下文特征等结合起来，采用深度学习模型进行召回。</p>
+<h3 id="3-ES在推荐系统中的应用"><a href="#3-ES在推荐系统中的应用" class="headerlink" title="3 ES在推荐系统中的应用"></a>3 ES在推荐系统中的应用</h3><p>ES加入了分布式、分片等特性后越来越多地应用在大型的搜索、推荐以及广告系统中。那么，为什么选择ES呢？究其原因，ES有以下4大特性。</p>
+<p>1）可实时分析。ES可以根据业务要求，发挥分布式的优点，尽最大可能实时分析、解析出业务需要的数据。</p>
+<p>2）可实时存储。ES在某个主节点保存数据时候，只有当副分片保存成功，才能认为是实时保存成功，并且支持批量保存数据。</p>
+<p>3）分布式集群。根据业务需求及当前的搜索量，ES可以横向扩展，支持存储最大PB级的数据，可以提高搜索速度。</p>
+<p>4）支持快速搜索。ES可以并发从N台机器的副分片或主分片搜索数据，通过查询机器负载进行组合数据，最终响应请求。</p>
+<h3 id="4-推荐系统中NLP的应用"><a href="#4-推荐系统中NLP的应用" class="headerlink" title="4 推荐系统中NLP的应用"></a>4 推荐系统中NLP的应用</h3><p>在广告的召回过程中，查询理解是一个重要的环节。第4章也归纳梳理了一些对查询理解的基本方法。下图是广告中的NLP算法应用，具体包括两个最基本的任务：用户查询意图的识别和查询重写。</p>
+<p><img src="https://rxk-1300064984.cos.ap-nanjing.myqcloud.com/img/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20210612112616.png" alt></p>
+<p><strong>1.用户查询意图识别</strong><br>查询分析过程中需要对查询进行分词，分析分词后的标引项以及标引项的权重。这和搜索中的查询分析完全一致。查询类目识别主要是判定类目，通常这类问题都会转化为文本分类问题来解决。目前，文本分类方法也有很多，比如基于传统统计模型、基于深度神经网络的方法等。关于具体的模型和方法前面的章节中都有讲解，针对不同的业务场景我们选择合适的分类模型即可。下面介绍在使用文本分类方面的经验技巧，这些技巧可能体现在预处理和训练阶段。</p>
+<p><strong>（1）文本预处理阶段</strong></p>
+<p>1）需要对文本进行泛化，如泛化命名实体。</p>
+<p>2）规范文本的长度，可以取所有文本长度的均值或者中位数。</p>
+<p>3）构建数据集的词典时，应该注意以下几点。</p>
+<p>·可以取高频词或者过滤次数小于某个阈值的词。</p>
+<p>·可考虑去掉停用词。</p>
+<p>·采用的预训练模型，要尽可能让词典中的词找到对应词向量。</p>
+<p>4）中文分词</p>
+<p>·判断是否需要分词，判断选用哪个分词器。</p>
+<p>·分词后可以根据词的长度过滤一些词，降低维度。</p>
+<p>·采用预训练的词向量时，要保证分词后的大部分词语能够出现在预训练的词向量表中，否则词嵌入就相当于是随机初始化，预训练的词向量没有提供任何信息。</p>
+<p>5）数据增强</p>
+<p>常见的方法有随机删除文本、改变文本顺序、同义词替换等。</p>
+<p><strong>（2）模型训练</strong></p>
+<p>1）特征工程。传统的机器学习方法根据特征工程可以分为三大类。</p>
+<p>·词袋模型，矩阵维度高且稀疏。</p>
+<p>·向量空间模型，需要考虑文档的频率、互信息、信息熵增益、卡方等。</p>
+<p>·主题模型，利用PLSA/LDA等模型提取文本特征，解释性较好。</p>
+<p>2）模型选择。建立好一个基线模型，然后依次选用不同模型做比较。</p>
+<p>3）双向RNN模型一般比单向效果要好。</p>
+<p>4）处理训练震荡及适当调整学习率等。</p>
+<p><strong>2.查询重写</strong></p>
+<p>查询重写的第一种方法是做查询扩展。前面的章节中也提到过一些查询扩展通用的方法。这里举一些实际的例子，比如“阿迪运动鞋”中的“阿迪”和“阿迪达斯”是同义关系。所以，我们可以把“阿迪运动鞋”这个查询直接扩展到“阿迪达斯运动鞋”。再举一个例子“小棕瓶眼霜”，这个查询中并没有提到“小棕瓶”属于哪一个品牌，所以可以通过知识图谱建立“小棕瓶”与“雅诗兰黛”品牌的关系，这里可以将“小棕瓶眼霜”直接改写为“雅诗兰黛眼霜”。</p>
+<p>第二种方法是相关性分析。相关性分析的方法也有很多，这里再介绍一种查询和商品条目相关性分析的方法，可以抽象成排序学习的问题。如给定查询Q和比对的短文本D，判别相关性的档位，假设相关性档位从0到5逐渐变强，相关性分析问题就可以抽象成如式（12-1）所示的形式。</p>
+<p><img src="https://rxk-1300064984.cos.ap-nanjing.myqcloud.com/img/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20210612113342.png" alt></p>
+<h3 id="5-推荐系统中粗排和精排"><a href="#5-推荐系统中粗排和精排" class="headerlink" title="5 推荐系统中粗排和精排"></a>5 推荐系统中粗排和精排</h3><p>广告从召回到曝光的过程需要经历粗排、精排和竞价及反作弊等阶段。广告粗排框架是对引擎端召回的若干广告进行排序，并将排序的结果进行截断。截断后的候选集会被传给广告精排模块处理。粗排目的是尽可能在候选广告集中找到与流量相关性较高的广告，一般可以有效转化为目标。</p>
+<p>CTR是指网络广告（图片广告/文字广告/关键词广告/排名广告/视频广告等）的点击到达率，即该广告的实际点击次数除以广告的展现量。CTR预估是互联网主流应用（广告、推荐、搜索等）的核心环节，包括Google、Facebook等业界巨头都在对该问题进行研究，国内阿里巴巴、腾讯、百度等一线互联网公司也在做持续研究。精排是使用CTR预估模型进行排序。</p>
+<p>为什么CTR预估是互联网计算广告的关键技术环节呢？我们可以把CTR问题抽象成如下的形式P(X=click|query，ad)，广告被展现后有两种可能的结果——点击或不点击，在n次展现中被点击的次数X服从二项分布。根据历史统计，CTR预估可以简化为：</p>
+<p><img src="https://rxk-1300064984.cos.ap-nanjing.myqcloud.com/img/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20210612120401.png" alt></p>
+<p><img src="https://rxk-1300064984.cos.ap-nanjing.myqcloud.com/img/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20210612120448.png" alt></p>
+<h3 id="6-推荐系统的评价和优化"><a href="#6-推荐系统的评价和优化" class="headerlink" title="6　推荐系统的评价和优化"></a>6　推荐系统的评价和优化</h3><p>之前讲述了搜索系统的评价和优化，其中所提到的指标同样适用于推荐系统排序阶段。本节将在此基础上讲述推荐系统的相关实验方法：离线评估、在线评估和主观评估，同时将各个指标嵌入其中，对各个阶段的模型和数据进行评估。</p>
+<p>离线评估是工程师拉取线上数据在实验环境训练模型，并进行离线指标评估的过程。该过程不需要各方人员全部参与，可以高效地进行多种模型的调整和优化，但可能导致线上和线下模型表现不一致，无法完全复制到线上环境，无法衡量具体业务指标的波动。在这个过程中，工程师衡量模型表现的指标一般有：1）准确度指标，包括：均方根误差、平均绝对误差、准确率、召回率、AUC以及nDCG等；2）覆盖度指标；3）多样性指标；4）实时性能指标；5）鲁棒性指标。工程师只有对上述指标评估后，才可将模型放到线上环境进行在线实验。</p>
+<p>在线实验常用的方法是A/B实验，把旧策略下的流量分出一定的比例给新策略，通过一段时间的测试，根据制定好的业务指标对新旧策略进行比较。在线评估涉及的主要指标有：1）服务响应时间；2）抗高并发能力；3）相关业务指标，主要包括曝光、浏览、下单等业务转化率指标。除了使用A/B实验，常用的还有Interleaving实验框架。该框架相比于传统A/B实验，有较小的样本需求量、较低的实验误差率，但也比传统A/B实验更加复杂，缺乏部分指标的预测能力。所以，读者在使用时需要根据具体需求自行选择。</p>
+<p>策略上线后，我们还可以进行主观评估。用户调研是一种常用的主观评估方法。问卷调查是一种重要的用户调查途径，但需要注意调查问卷的设计、用户引导、调查对象选取的范围和数量，从而确保调查结果的可用性等。</p>
+<p>总之，在推荐系统的评价和优化过程中，离线评估、在线评估以及主观评估都是必不可少的，在此基础上进行系统的迭代和优化才能更加有效。</p>
+<h3 id="7-深度学习在推荐系统应用"><a href="#7-深度学习在推荐系统应用" class="headerlink" title="7 深度学习在推荐系统应用"></a>7 深度学习在推荐系统应用</h3><p>深度学习在推荐、搜索以及广告中都发挥着举足轻重的作用。在数据驱动的时代背景下，深度学习模型也开始在各个领域发挥作用。广告系统是深度学习的实验田。</p>
+<p>下面以阿里为例具体讲一下阿里在排序方面的进化。</p>
+<p>在2012年，阿里巴巴就提出了MLR(Mixed Logistic Regression)模型并实际部署到线上系统，同时期的模型还有FM模型。MLR的本质是由多个LR模型组合而成，用分片线性模式来拟合高维空间的非线性模式。当时，只有阿里采用了“大规模离散特征+分布式非线性MLR模型”。MLR模型最大的问题如下。</p>
+<p>1）从数百维统计特征到数十亿离散特征，训练架构需要调整。</p>
+<p>2）模型学习到兼具拟合能力和泛化能力的范式存疑。</p>
+<p>3）这种超大规模数据上的非凸优化问题难以解决。</p>
+<p>2015年，MLR模型遇到了发展瓶颈，当数据量增加，训练样本量也逐渐增大，而且引入高阶特征，需要更复杂的模型，代价高。</p>
+<p>2016年，阿里巴巴引入了深度学习模型，把基于第一代端到端深度网络模型GWEN引入CTR预估实际应用中，并产生了第一代Deep CTR模型，如下图所示。</p>
+<p><img src="https://rxk-1300064984.cos.ap-nanjing.myqcloud.com/img/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20210612121124.png" alt></p>
+<p>从2016年到2017年，阿里巴巴从第一代GWEN模型开始不断进行变革。同时期，工业界也从机器学习的特征工程跨越到深度学习的模型工程，前者是特征驱动，后者是数据驱动。同时，业界提出了很多模型，如PNN/DeepFM/DCN/xDeepFM等。这些模型是一脉相承的思路，即用人工构造的代数式的先验来帮助模型建立对某种认知模式的预设，如LR模型对原始离散特征的交叉组合。</p>
+<p>如下图所示，这个时期产生了DIN(Deep Interest Network)和DIEN(Deep Interest Evolution Network)模型。这两个模型都是围绕着用户兴趣建模，切入点是从电商场景观察到的数据特征，并针对性地进行了网络结构设计。DIN模型捕捉了用户兴趣的多样性以及与预测目标的局部相关性；DIEN模型进一步强化了兴趣的扩展以及兴趣在不同维度的投影关系。</p>
+<p><img src="https://rxk-1300064984.cos.ap-nanjing.myqcloud.com/img/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20210612121257.png" alt></p>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">CinKate</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://renxingkai.github.io/2021/06/12/SearchAndRec-Chapter12/">http://renxingkai.github.io/2021/06/12/SearchAndRec-Chapter12/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/search-recommend/">search&amp;recommend</a></div><div class="social-share pull-right" data-disabled="google,facebook"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script><nav id="pagination"><div class="prev-post pull-left"><a href="/2021/10/11/shell-learn-01/"><i class="fa fa-chevron-left">  </i><span>shell学习笔记-01</span></a></div><div class="next-post pull-right"><a href="/2021/06/12/SearchAndRec-Chapter11/"><span>智能搜索和推荐系统第十一章--搜索应用实战</span><i class="fa fa-chevron-right"></i></a></div></nav></div></div><footer class="footer-bg" style="background-image: url(http://p17.qhimg.com/d/_open360/fengjing0403/21.jpg)"><div class="layout" id="footer"><div class="copyright">&copy;2019 - 2022 By CinKate</div><div class="framework-info"><span>Driven - </span><a href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>Theme - </span><a href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="footer_custom_text">Hi, welcome to my <a href="https://renxingkai.github.io">blog</a>!</div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file-o"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.9.0"></script><script src="/js/fancybox.js?version=1.9.0"></script><script src="/js/sidebar.js?version=1.9.0"></script><script src="/js/copy.js?version=1.9.0"></script><script src="/js/fireworks.js?version=1.9.0"></script><script src="/js/transition.js?version=1.9.0"></script><script src="/js/scroll.js?version=1.9.0"></script><script src="/js/head.js?version=1.9.0"></script><script type="text/x-mathjax-config">MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+    processEscapes: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+  },
+  CommonHTML: {
+    linebreaks: { automatic: true, width: "90% container" }
+  },
+  "HTML-CSS": { 
+    linebreaks: { automatic: true, width: "90% container" }
+  },
+  "SVG": { 
+    linebreaks: { automatic: true, width: "90% container" }
+  }
+});
+</script><script type="text/x-mathjax-config">MathJax.Hub.Queue(function() {
+  var all = MathJax.Hub.getAllJax(), i;
+  for (i=0; i < all.length; i += 1) {
+    all[i].SourceElement().parentNode.className += ' has-jax';
+  }
+});
+</script><script src="https://cdn.jsdelivr.net/npm/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css"><script src="/js/katex.js"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script></body></html>

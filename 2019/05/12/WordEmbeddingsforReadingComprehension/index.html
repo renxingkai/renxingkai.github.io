@@ -1,0 +1,77 @@
+<!DOCTYPE html><html lang="en"><head><meta name="generator" content="Hexo 3.9.0"><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="《A Comparative Study of Word Embeddings for Reading Comprehension》论文阅读"><meta name="keywords" content="词向量相关"><meta name="author" content="CinKate"><meta name="copyright" content="CinKate"><title>《A Comparative Study of Word Embeddings for Reading Comprehension》论文阅读 | CinKate's Blogs</title><link rel="shortcut icon" href="/melody-favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.9.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.9.0"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css?version=1.9.0"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="dns-prefetch" href="https://hm.baidu.com"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?b77222dd6b9929f160b8a04fc8705337";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();</script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  hexoVersion: '3.9.0'
+} </script></head><body><canvas class="fireworks"></canvas><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="Toggle article">Toggle site</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#所用的数据集和模型"><span class="toc-number">1.</span> <span class="toc-text">所用的数据集和模型</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#实验和结果"><span class="toc-number">2.</span> <span class="toc-text">实验和结果</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#总结"><span class="toc-number">3.</span> <span class="toc-text">总结</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="http://imgsrc.baidu.com/forum/w%3D580/sign=f8de0e9b3e87e9504217f3642039531b/1c3bd133c895d143e395e57b77f082025baf0726.jpg"></div><div class="author-info__name text-center">CinKate</div><div class="author-info__description text-center">长笛一声人倚楼~</div><div class="follow-button"><a href="https://github.com/renxingkai">Follow Me</a></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">Articles</span><span class="pull-right">48</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">Tags</span><span class="pull-right">31</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">Categories</span><span class="pull-right">17</span></a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(http://p17.qhimg.com/d/_open360/fengjing0403/21.jpg)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">CinKate's Blogs</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a><a class="site-page" href="/about">About</a></span><span class="pull-right"></span></div><div id="post-info"><div id="post-title">《A Comparative Study of Word Embeddings for Reading Comprehension》论文阅读</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2020-05-17</time><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/自然语言处理/">自然语言处理</a><div class="post-meta-wordcount"><span>Word count: </span><span class="word-count">865</span><span class="post-meta__separator">|</span><span>Reading time: 2 min</span></div></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><p>众所周知，预训练好的词向量有不同的维度，比如预训练好的GloVe词向量有从50-300维等的词向量表示，但这些不同维度的表示有什么区别，以及在什么时候该用什么维度的词向量（虽然各论文中大家大多用了300维的词向量），这些问题我也确实不太清除。这篇论文解答了我的这些困惑，写的还是很精彩的。</p>
+<p><a href="https://arxiv.org/abs/1703.00993" target="_blank" rel="noopener">论文原链接</a></p>
+<p>Let’s have a look:</p>
+<p>这篇论文主要解决了两个问题点：</p>
+<p><strong>- 在阅读理解任务中应该使用什么样的预训练词向量</strong></p>
+<p><strong>- 测试阶段对于OOV词应怎样处理</strong></p>
+<h5 id="所用的数据集和模型"><a href="#所用的数据集和模型" class="headerlink" title="所用的数据集和模型"></a>所用的数据集和模型</h5><p><strong>数据集</strong>：</p>
+<ul>
+<li>Who-Did-What(WDW) 完型填空类的数据集，从新闻故事中构建</li>
+<li>Children’s Book Test(CBT) 从children’s book构建，此论文中仅用了CBT-NE，即数据集中答案为命名实体的数据</li>
+</ul>
+<p><strong>模型：</strong><br><strong>Stanford AR、GA Reader</strong></p>
+<p><strong>词向量对比：</strong></p>
+<ul>
+<li>GloVe (50-300)</li>
+<li>word2vec (300)</li>
+</ul>
+<h5 id="实验和结果"><a href="#实验和结果" class="headerlink" title="实验和结果"></a>实验和结果</h5><ol>
+<li>词向量的对比</li>
+</ol>
+<ul>
+<li>第一个结果：<strong>使用在合适的语料库上训练的词向量可以比随机初始化提高3-6％。</strong><br>然而，用于预训练的语料库和方法是重要的选择：例如，在CBT上训练的word2vec词向量比随机词向量执行效果更差。 另请注意，<strong>在每种情况下，GloVe词向量都优于在同一语料库中训练的word2vec嵌入。</strong> 但是由于词向量对训练参数很敏感，并不能说GloVe一定比word2vec好，但确实从各个论文中也可以看出，一般会优先选择GloVe。</li>
+<li>第二个结果：<strong>对比GloVe不同维度对实验结果的影响(50-300)</strong>：随着词向量维度的增加，实验结果性能是下降的。但是即使使用了300维的GloVe词向量，实验结果仍然比word2vec词向量效果好。</li>
+<li>第三个结果：<strong>在使用原始语料进行训练时，要先将停用词去掉</strong>，与停用词的共现提供关于特定单词的语义的很少有意义的信息，因此具有高百分比的语料库可能不会产生高质量的向量。<strong>训练词向量时，超参数调节很重要。</strong></li>
+</ul>
+<ol start="2">
+<li>处理OOV词</li>
+</ol>
+<ul>
+<li>第一个结果：<strong>一般对于OOV词的处理都是赋予一个固定大小不变的词向量（UNK）</strong>。这种方法忽略了这样一个事实，即分配为UNK的许多单词可能已经训练过VG中可用的词向量。实验中在测试时，任何新token将被分配其GloVe向量（如果存在）或UNK的向量。</li>
+<li>第二个结果，<strong>不是为所有OOV词分配一个共同的UNK向量，而是为它们分配未经训练但唯一的随机向量可能更好。此方法在训练时访问测试集词表是没必要的。</strong></li>
+</ul>
+<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><p>作者已经证明，用于初始化单词向量的预训练词向量的选择对于阅读理解的神经网络模型的性能具有显著影响。在测试时处理OOV词的方法也是如此。</p>
+<p><strong>根据作者的实验，我们建议使用现成的GloVe词向量，并在测试时将预先训练的GloVe向量（如果可用）或随机但唯一的向量分配给OOV词。</strong></p>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">CinKate</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://renxingkai.github.io/2019/05/12/WordEmbeddingsforReadingComprehension/">http://renxingkai.github.io/2019/05/12/WordEmbeddingsforReadingComprehension/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/词向量相关/">词向量相关</a></div><div class="social-share pull-right" data-disabled="google,facebook"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script><nav id="pagination"><div class="prev-post pull-left"><a href="/2020/12/01/docker-learning/"><i class="fa fa-chevron-left">  </i><span>Docker基础学习</span></a></div><div class="next-post pull-right"><a href="/2019/04/21/fastqa/"><span>FastQA学习</span><i class="fa fa-chevron-right"></i></a></div></nav></div></div><footer class="footer-bg" style="background-image: url(http://p17.qhimg.com/d/_open360/fengjing0403/21.jpg)"><div class="layout" id="footer"><div class="copyright">&copy;2019 - 2022 By CinKate</div><div class="framework-info"><span>Driven - </span><a href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>Theme - </span><a href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="footer_custom_text">Hi, welcome to my <a href="https://renxingkai.github.io">blog</a>!</div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file-o"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.9.0"></script><script src="/js/fancybox.js?version=1.9.0"></script><script src="/js/sidebar.js?version=1.9.0"></script><script src="/js/copy.js?version=1.9.0"></script><script src="/js/fireworks.js?version=1.9.0"></script><script src="/js/transition.js?version=1.9.0"></script><script src="/js/scroll.js?version=1.9.0"></script><script src="/js/head.js?version=1.9.0"></script><script type="text/x-mathjax-config">MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+    processEscapes: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+  },
+  CommonHTML: {
+    linebreaks: { automatic: true, width: "90% container" }
+  },
+  "HTML-CSS": { 
+    linebreaks: { automatic: true, width: "90% container" }
+  },
+  "SVG": { 
+    linebreaks: { automatic: true, width: "90% container" }
+  }
+});
+</script><script type="text/x-mathjax-config">MathJax.Hub.Queue(function() {
+  var all = MathJax.Hub.getAllJax(), i;
+  for (i=0; i < all.length; i += 1) {
+    all[i].SourceElement().parentNode.className += ' has-jax';
+  }
+});
+</script><script src="https://cdn.jsdelivr.net/npm/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css"><script src="/js/katex.js"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script></body></html>
