@@ -1,0 +1,353 @@
+<!DOCTYPE html><html lang="en"><head><meta name="generator" content="Hexo 3.9.0"><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="C++新特性系列二：类与对象"><meta name="keywords" content="C++"><meta name="author" content="CinKate"><meta name="copyright" content="CinKate"><title>C++新特性系列二：类与对象 | CinKate's Blogs</title><link rel="shortcut icon" href="/melody-favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.9.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.9.0"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css?version=1.9.0"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="dns-prefetch" href="https://hm.baidu.com"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?b77222dd6b9929f160b8a04fc8705337";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();</script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  hexoVersion: '3.9.0'
+} </script></head><body><canvas class="fireworks"></canvas><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="Toggle article">Toggle site</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、类"><span class="toc-number">1.</span> <span class="toc-text">一、类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、this，常成员函数与常对象"><span class="toc-number">2.</span> <span class="toc-text">二、this，常成员函数与常对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、inline，mutable，default，delete"><span class="toc-number">3.</span> <span class="toc-text">三、inline，mutable，default，delete</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#四、友元类与友元函数"><span class="toc-number">4.</span> <span class="toc-text">四、友元类与友元函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#五、重载运算符"><span class="toc-number">5.</span> <span class="toc-text">五、重载运算符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#六、普通继承及其实现原理"><span class="toc-number">6.</span> <span class="toc-text">六、普通继承及其实现原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#七、虚函数及其实现原理，override关键字"><span class="toc-number">7.</span> <span class="toc-text">七、虚函数及其实现原理，override关键字</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#八、静态成员变量与静态函数"><span class="toc-number">8.</span> <span class="toc-text">八、静态成员变量与静态函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#九、（-）纯虚函数"><span class="toc-number">9.</span> <span class="toc-text">九、（*）纯虚函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#十、RTTI"><span class="toc-number">10.</span> <span class="toc-text">十、RTTI</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#十一、多继承"><span class="toc-number">11.</span> <span class="toc-text">十一、多继承</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#十二、虚继承及其实现原理"><span class="toc-number">12.</span> <span class="toc-text">十二、虚继承及其实现原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#十三、（-）移动构造函数与移动赋值运算符"><span class="toc-number">13.</span> <span class="toc-text">十三、（**）移动构造函数与移动赋值运算符</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="http://imgsrc.baidu.com/forum/w%3D580/sign=f8de0e9b3e87e9504217f3642039531b/1c3bd133c895d143e395e57b77f082025baf0726.jpg"></div><div class="author-info__name text-center">CinKate</div><div class="author-info__description text-center">长笛一声人倚楼~</div><div class="follow-button"><a href="https://github.com/renxingkai">Follow Me</a></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">Articles</span><span class="pull-right">50</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">Tags</span><span class="pull-right">32</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">Categories</span><span class="pull-right">17</span></a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(http://p17.qhimg.com/d/_open360/fengjing0403/21.jpg)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">CinKate's Blogs</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a><a class="site-page" href="/about">About</a></span><span class="pull-right"></span></div><div id="post-info"><div id="post-title">C++新特性系列二：类与对象</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2022-08-20</time><div class="post-meta-wordcount"><span>Word count: </span><span class="word-count">7.7k</span><span class="post-meta__separator">|</span><span>Reading time: 29 min</span></div></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><h2 id="一、类"><a href="#一、类" class="headerlink" title="一、类"></a>一、类</h2><p><strong>1.构造函数</strong>有以下类型。</p>
+<ol>
+<li>普通构造函数：</li>
+<li>复制构造函数(拷贝构造函数)：用另一个对象来初始化对象对应的内存</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">class CPPTest</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    CPPTest(int i_, int i1_) : i(i_), i1(i1_) &#123;&#125;//普通构造函数</span><br><span class="line">    CPPTest(const CPPTest &amp;cppTest) : i(cppTest.i), i1(cppTest.i1) &#123;&#125; //拷贝构造函数</span><br><span class="line">    CPPTest()&#123;&#125; //默认构造函数</span><br><span class="line">    ~CPPTest()&#123;&#125; //析构函数</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">    int i;</span><br><span class="line">    int i1;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>移动构造函数：也是用另一个对象来初始化对象。</li>
+<li>默认构造函数：当类没有任何构造函数时，编译期会为该类生成一个默认的的构造函数，在最普通的类中，默认构造函数什么都没做，对象对应的内存没有被初始化。</li>
+</ol>
+<p><strong>2.析构函数</strong>：<br>析构函数介绍：当类对象被销毁时，就会调用析构函数。</p>
+<ul>
+<li>栈上对象的销毁时机就是函数栈销毁时。</li>
+<li>堆上的对象销毁时机就是该堆内存被手动释放时，如果用new申请的这块堆内存，那调用delete销毁这块内存时就会调用析构函数。</li>
+</ul>
+<h2 id="二、this，常成员函数与常对象"><a href="#二、this，常成员函数与常对象" class="headerlink" title="二、this，常成员函数与常对象"></a>二、this，常成员函数与常对象</h2><p>1.this关键字：</p>
+<p>(1)    this是什么：</p>
+<ul>
+<li>编译器将this解释为指向函数所作用的对象的指针。C++类的本质就是C语言的结构体外加几个类外的函数，C++最后都要转化为C语言来实现，类外的函数就是通过this来指向这个类的。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line"></span><br><span class="line">class CPPTest</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    CPPTest(const std::string name_, unsigned old_);</span><br><span class="line">    CPPTest();</span><br><span class="line">    ~CPPTest();</span><br><span class="line"></span><br><span class="line">    void outPut()</span><br><span class="line">    &#123;</span><br><span class="line">        std::cout &lt;&lt; &quot;name=&quot; &lt;&lt; name &lt;&lt; &quot;.old=&quot; &lt;&lt; old &lt;&lt; std::endl;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">    std::string name;</span><br><span class="line">    unsigned old;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">CPPTest::CPPTest(const std::string name_, unsigned old_) : name(name_), old(old_)</span><br><span class="line">&#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">CPPTest::~CPPTest()</span><br><span class="line">&#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    CPPTest test(&quot;abc&quot;, 20);</span><br><span class="line">    test.outPut();</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>当然，这么说并非完全准确，this是一个关键字，只是我们将它当做指针理解罢了。</li>
+</ul>
+<p>this有很多功能是单纯的指针无法满足的。比如每个类函数的参数根本没有名    叫this的指针。这不过是编译器赋予的功能罢了。</p>
+<ol start="2">
+<li>常成员函数和常对象</li>
+</ol>
+<p>首先说一下：常成员函数和常对象很多人并不在意，确实，都写普通变量也可以。但是，我还是要提一点，在大型程序中，尽量加上const关键字可以减少很多不必要的错误。</p>
+<p>(1)    const关键字含义：</p>
+<p>常成员函数就是无法修改成员变量的函数。可以理解为将this指针指向对象用const修饰的函数。</p>
+<p><strong>其实就是在类成员函数后面加上const关键字。</strong></p>
+<p>常对象就是用const修饰的对象，定义好之后就再也不需要更改成员变量的值了。常对象在大型程序中还是很有意义的。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line"></span><br><span class="line">class CPPTest</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    CPPTest(const std::string name_, unsigned old_);</span><br><span class="line">    CPPTest();</span><br><span class="line">    ~CPPTest();</span><br><span class="line"></span><br><span class="line">    void outPut() const //常成员函数，无法修改对象的成员变量</span><br><span class="line">    &#123;</span><br><span class="line">        std::cout &lt;&lt; &quot;name=&quot; &lt;&lt; name &lt;&lt; &quot;.old=&quot; &lt;&lt; old &lt;&lt; std::endl;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">    std::string name;</span><br><span class="line">    unsigned old;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">CPPTest::CPPTest(const std::string name_, unsigned old_) : name(name_), old(old_)</span><br><span class="line">&#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">CPPTest::~CPPTest()</span><br><span class="line">&#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    const CPPTest test(&quot;abc&quot;, 20); //常对象，无法对对象进行修改</span><br><span class="line">    test.outPut();</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>(2)    常成员函数注意事项：<br>因为类的成员函数已经将this指针省略了，只能在函数后面加const关键字来实现无法修改类成员变量的功能了。</p>
+<ul>
+<li>注意：常函数无法调用了普通函数，否则常函数的这个“常”字还有什么意义。</li>
+<li><strong>成员函数能写作常成员函数就尽量写作常成员函数，可以减少出错几率。</strong></li>
+<li><strong>同名的常成员函数和普通成员函数是可以重载的，常量对象会优先调用常成员函数，普通对象会优先调用普通成员函数</strong></li>
+</ul>
+<h2 id="三、inline，mutable，default，delete"><a href="#三、inline，mutable，default，delete" class="headerlink" title="三、inline，mutable，default，delete"></a>三、inline，mutable，default，delete</h2><ol>
+<li>inline关键字</li>
+</ol>
+<p>(1)    inline关键字的有什么作用：</p>
+<ul>
+<li>在函数声明或定义中函数返回类型前加上关键字inline就可以把函数指定为内联函数。关键字inline必须与函数定义放在一起才能使函数成为内联，仅仅将inline放在函数声明前不起任何作用。</li>
+<li>内联函数的作用，普通函数在调用时需要给函数分配栈空间以供函数执行，压栈等操作会影响成员运行效率，于是C++提供了内联函数将函数体放到需要调用函数的地方，用空间换效率。<strong>不再创建新的栈来执行函数</strong></li>
+</ul>
+<p>(2)    inline关键字的注意事项：inline关键字只是一个建议，开发者建议编译器将成员函数当做内联函数，一般适合搞内联的情况编译器都会采纳建议。</p>
+<p>(3)    Inline关键字的总结。使用inline关键字就是一种提高效率，但加大编译后文件大小的方式，现在随着硬件性能的提高，inline关键字用的越来越少了。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line"></span><br><span class="line">class CPPTest</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    inline void outPut(); //此处的inline可以省略</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">    std::string name;</span><br><span class="line">    unsigned old;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">inline void CPPTest::outPut()</span><br><span class="line">&#123;</span><br><span class="line">    std::cout&lt;&lt;&quot;sss&quot;&lt;&lt;std::endl;</span><br><span class="line">&#125;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    CPPTest test;</span><br><span class="line">    test.outPut(); //执行时，其实相当于将std::cout&lt;&lt;&quot;sss&quot;&lt;&lt;std::endl;替换了这一行</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>mutable关键字<br>(1)    mutable关键字的作用：</li>
+</ol>
+<ul>
+<li>Mutable意为可变的，与const相对，被mutable修饰的成员变量，永远处于可变的状态，即便处于一个常函数中，该变量也可以被更改。</li>
+</ul>
+<p>这个关键字在现代C++中使用情况并不多，一般来说只有在统计函数调用次数时才会用到。</p>
+<p>(2)    mutable关键字的注意事项</p>
+<ul>
+<li>mutable是一种万不得已的写法，一个程序不得不使用mutable关键字时，可以认为这部分程序是一个糟糕的设计。</li>
+<li>mutable不能修饰静态成员变量和常成员变量。</li>
+</ul>
+<p>(3)    总结：mutable关键字是一种没有办法的办法，设计时应该尽量避免，只有在统计函数调用次数这类情况下才推荐使用。这个关键字也称不上是重点。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line"></span><br><span class="line">class CPPTest</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    void output() const;</span><br><span class="line"></span><br><span class="line">    mutable unsigned outPutCallCount=0; //可变的成员变量，即使在常函数中，也是可变的</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">    std::string name;</span><br><span class="line">    unsigned old;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"> void CPPTest::output() const</span><br><span class="line">&#123;</span><br><span class="line">    ++outPutCallCount;//对可变 成员变量进行修改</span><br><span class="line">    std::cout&lt;&lt;&quot;sss&quot;&lt;&lt;std::endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    CPPTest test;</span><br><span class="line">    test.output(); </span><br><span class="line">    test.output();</span><br><span class="line">    test.output();</span><br><span class="line">    test.output();</span><br><span class="line">    test.output();</span><br><span class="line">    test.output();</span><br><span class="line">    test.output();</span><br><span class="line">    std::cout&lt;&lt;test.outPutCallCount&lt;&lt;std::endl;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>default关键字</li>
+</ol>
+<p>(1)    default关键字的作用：default关键字的作用很简单。</p>
+<ul>
+<li>在编译时不会生成默认构造函数时便于书写。</li>
+<li>也可以对<strong>默认复制构造函数，默认的赋值运算符和默认的析构函数使用</strong>，表示使用的是系统默认提供的函数，这样可以使代码更加明显。</li>
+<li><strong>现代C++中，哪怕没有构造函数，也推荐将构造函数用default关键字标记，可以让代码看起来更加直观，方便。</strong></li>
+</ul>
+<p>总结：default关键字还是推荐使用的，在现代C++代码中，如果需要使用一些默认的函数，推荐用default标记出来。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line"></span><br><span class="line">class CPPTest</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    CPPTest(const std::string &amp;name_, const unsigned old_) : name(name_), old(old_) &#123;&#125;</span><br><span class="line">    CPPTest(const CPPTest &amp;test) = default;            //拷贝构造函数</span><br><span class="line">    CPPTest() = default;                               //默认构造函数</span><br><span class="line">    CPPTest &amp;operator=(const CPPTest &amp;test) = default; //默认赋值运算符</span><br><span class="line">    ~CPPTest() = default;                              //默认析构函数</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">    std::string name;</span><br><span class="line">    unsigned old;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>delete关键字</li>
+</ol>
+<p>(1)    Delete关键字的作用：C++ 会为程序生成默认构造函数，默认复制构造函数，默认重载赋值运算符。在很多情况下，我们并不希望这些默认的函数被生成，在C++11以前，只能有将此    函数声明为私有函数或是将函数只声明不定义两种方式。</p>
+<p>C++11于是提供了delete关键字，只要在函数最后加上“=delete”就可以明确告诉    编译期不要默认生成该函数。</p>
+<p>总结：delete关键字还是推荐使用的，在现代C++代码中，如果不希望一些函数默认生成，就用delete表示，这个功能还是很有用的，比如在单例模式中，</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line"></span><br><span class="line">class CPPTest</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    CPPTest(const std::string &amp;name_, const unsigned old_) : name(name_), old(old_) &#123;&#125;</span><br><span class="line">    CPPTest(const CPPTest &amp;test) = delete;            //拷贝构造函数 不自动生成</span><br><span class="line">    CPPTest() = delete;                               //默认构造函数 不自动生成</span><br><span class="line">    CPPTest &amp;operator=(const CPPTest &amp;test) = default; //默认赋值运算符</span><br><span class="line">    ~CPPTest() = default;                              //默认析构函数</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">    std::string name;</span><br><span class="line">    unsigned old;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="四、友元类与友元函数"><a href="#四、友元类与友元函数" class="headerlink" title="四、友元类与友元函数"></a>四、友元类与友元函数</h2><ol>
+<li>友元的介绍：友元就是可以让另一个类或函数访问私有成员的简单写法。</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line"></span><br><span class="line">class CPPTest</span><br><span class="line">&#123;</span><br><span class="line">    friend class CPP;                        //友元类</span><br><span class="line">    friend void output(const CPPTest &amp;test); //友元函数</span><br><span class="line">private:</span><br><span class="line">    std::string name;</span><br><span class="line">    unsigned old;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">class CPP</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    void output(const CPPTest &amp;test)</span><br><span class="line">    &#123;</span><br><span class="line">        std::cout &lt;&lt; test.name &lt;&lt; test.old &lt;&lt; std::endl; //在CPPTest中 声明友元类之后，即可以访问该类的私有变量</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">void output(const CPPTest &amp;test)</span><br><span class="line">&#123;</span><br><span class="line">    std::cout &lt;&lt; test.name &lt;&lt; test.old &lt;&lt; std::endl; //在CPPTest中 声明友元函数之后，即可以访问该类的私有变量</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>注意：</li>
+</ol>
+<ul>
+<li>友元会破坏封装性，一般不推荐使用，所带来的方便写几个接口函数就解决了。</li>
+<li>(*)某些运算符的重载必须用到友元的功能，这才是友元的真正用途。</li>
+</ul>
+<ol start="3">
+<li>总结：友元平常并不推荐使用，新手不要再纠结友元的语法了，只要可以用友元写出必须用友元的重载运算符就可以了。</li>
+</ol>
+<h2 id="五、重载运算符"><a href="#五、重载运算符" class="headerlink" title="五、重载运算符"></a>五、重载运算符</h2><ol>
+<li>重载运算符的作用：</li>
+</ol>
+<ul>
+<li>很多时候我们想让类对象也能像基础类型的对象一样进行作基础操作，比如“+”，“-”，“*”，“\”，也可以使用某些运算符“=”，“()”，“[]”,“&lt;&lt;”，“&gt;&gt;”。但是一般的类即使编译器可以识别这些运算符，类对象也无法对这些运算符做出应对，我们必须对类对象定义处理这些运算符的方式。</li>
+<li>C++提供了定义这些行为的方式，就是“operator 运算符”来定义运算符的行为，operator是一个关键字，告诉编译器我要重载运算符了。</li>
+<li></li>
+</ul>
+<ol start="2">
+<li>注意：</li>
+</ol>
+<ul>
+<li>我们只能重载C++ 已有的运算符，所有无法将 “ <strong> ” 这个运算符定义为指数的形式，因为C++  根本没有 “ </strong> ” 这个运算符。</li>
+<li>C++ 重载运算符不能改变运算符的元数，“元数”这个概念就是指一个运算符对应的对象数量，比如“+”必须为“a + b”，也就是说“+”必须有两个对象，那么“+”就是二元运算符。比如“ ++ ”运算符，必须写为“ a++ ”，也就是一元运算符。</li>
+</ul>
+<ol start="3">
+<li>重载运算符举例,以下全部用代码演示：</li>
+</ol>
+<ul>
+<li>一元运算符重载<ul>
+<li>“++”，“–”,</li>
+<li>“[]”</li>
+<li>“()”</li>
+<li>“&lt;&lt;”，“&gt;&gt;”</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>二元运算符重载<ul>
+<li>“+”，“-”，“*”，“/”</li>
+<li>“=”，</li>
+<li>“&gt;”，“&lt;”，“==”<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;vector&gt;</span><br><span class="line">class CPPTest</span><br><span class="line">&#123; //重载输出流，必须使用友元</span><br><span class="line">    friend std::ostream &amp;operator&lt;&lt;(std::ostream &amp;os, const CPPTest &amp;cpptest);</span><br><span class="line"></span><br><span class="line">    friend std::istream &amp;operator&gt;&gt;(std::istream &amp;is, CPPTest &amp;cpptest); //重载输入流</span><br><span class="line">public:</span><br><span class="line">    void operator++() //++</span><br><span class="line">    &#123;</span><br><span class="line">        ++old;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    void operator--() //--</span><br><span class="line">    &#123;</span><br><span class="line">        --old;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    void operator()() //()</span><br><span class="line">    &#123;</span><br><span class="line">        std::cout &lt;&lt; &quot;hello world&quot; &lt;&lt; std::endl;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    void operator()(const std::string &amp;name) //可重载</span><br><span class="line">    &#123;</span><br><span class="line">        std::cout &lt;&lt; name &lt;&lt; std::endl;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    int operator[](unsigned i) //[]</span><br><span class="line">    &#123;</span><br><span class="line">        if (i &gt; 0 &amp;&amp; i &lt; ivec.size())</span><br><span class="line">        &#123;</span><br><span class="line">            return ivec[i];</span><br><span class="line">        &#125;</span><br><span class="line">        return -1;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    CPPTest operator+(const CPPTest &amp;CPPTest)</span><br><span class="line">    &#123; //重载+，不能返回引用，因为返回的是对象</span><br><span class="line">        old += CPPTest.old;</span><br><span class="line">        return *this;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    bool operator&lt;(const CPPTest &amp;cpptest) //重载&lt;</span><br><span class="line">    &#123;</span><br><span class="line">        return this-&gt;old &lt; cpptest.old ? true : false;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    bool operator&gt;(const CPPTest &amp;cpptest) //重载&gt;</span><br><span class="line">    &#123;</span><br><span class="line">        return this-&gt;old &gt; cpptest.old ? true : false;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    bool operator==(const CPPTest &amp;cpptest) //重载==</span><br><span class="line">    &#123;</span><br><span class="line">        return this-&gt;old == cpptest.old ? true : false;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    CPPTest &amp;operator=(const CPPTest &amp;CPPTest) //重载=，必须返回引用，因为返回的就是自己本身</span><br><span class="line">    &#123;</span><br><span class="line">        if (this == &amp;CPPTest)</span><br><span class="line">        &#123;</span><br><span class="line">            return *this;</span><br><span class="line">        &#125;</span><br><span class="line">        else</span><br><span class="line">        &#123;</span><br><span class="line">            old = CPPTest.old;</span><br><span class="line">            name = CPPTest.name;</span><br><span class="line">            ivec = CPPTest.ivec;</span><br><span class="line">            return *this;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    unsigned old = 0;</span><br><span class="line">    std::vector&lt;int&gt; ivec&#123;1, 2, 3, 4, 5, 6&#125;;</span><br><span class="line">    std::string name;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">std::ostream &amp;operator&lt;&lt;(std::ostream &amp;os, const CPPTest &amp;cpptest)</span><br><span class="line">&#123;</span><br><span class="line">    os &lt;&lt; cpptest.old &lt;&lt; std::endl;</span><br><span class="line">    return os;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">std::istream &amp;operator&gt;&gt;(std::istream &amp;is, CPPTest &amp;cpptest)</span><br><span class="line">&#123;</span><br><span class="line">    is &gt;&gt; cpptest.name;</span><br><span class="line">    return is;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    CPPTest test;</span><br><span class="line">    ++test; //重载++</span><br><span class="line">    --test; //重载--</span><br><span class="line"></span><br><span class="line">    std::cout &lt;&lt; test.old &lt;&lt; std::endl;</span><br><span class="line">    std::cout &lt;&lt; test[3] &lt;&lt; std::endl; //重载[]</span><br><span class="line">    test();</span><br><span class="line">    test(&quot;sssss&quot;);</span><br><span class="line"></span><br><span class="line">    std::cin &gt;&gt; test;</span><br><span class="line">    std::cout &lt;&lt; test;</span><br><span class="line"></span><br><span class="line">    CPPTest test2;</span><br><span class="line">    test2.old = 200;</span><br><span class="line">    CPPTest test3;</span><br><span class="line">    test3 = test + test2;                //重载+</span><br><span class="line">    std::cout &lt;&lt; test3.old &lt;&lt; std::endl; //重载[]</span><br><span class="line"></span><br><span class="line">    test = test2; //重载=</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<p>至于唯一的三元运算符“?:”，不能重载</p>
+<ul>
+<li>类类型转化运算符：“operator 类型”</li>
+<li>特殊的运算符：new，delete，new[]，delete[]</li>
+</ul>
+<p>注意：“=”类会默认进行重载，如果不需要可以用“delete关键字进行修饰”。</p>
+<p>总结：重载运算符非常重要，C++类中几乎都要定义各种各种的重载运算符。</p>
+<h2 id="六、普通继承及其实现原理"><a href="#六、普通继承及其实现原理" class="headerlink" title="六、普通继承及其实现原理"></a>六、普通继承及其实现原理</h2><ol>
+<li>C++继承介绍：</li>
+</ol>
+<p>C++非继承的类相互是没有关联性的，假设现在需要设计医生，教师，公务员三个类，需要定义很多重复的内容而且相互没有关联，调用也没有规律。如果这还算好，那一个游戏有几千件物品，调用时也要写几千个函数。这太要命了。于是继承能力就应运而生了。</p>
+<ol start="2">
+<li>C++继承原理：</li>
+</ol>
+<p>C++的继承可以理解为在创建子类成员变量之前先创建父类的成员变量，实际上，C语言就是这么模仿出继承功能的。</p>
+<ol start="3">
+<li>C++继承的注意事项。</li>
+</ol>
+<ul>
+<li>C++子类对象的构造过程。先调用父类的构造函数，再调用子类的构造函数，也就是说先初始化父类的成员，再初始化子类的成员。</li>
+<li>若父类没有默认的构造函数，子类的构造函数又未调用父类的构造函数，则无法编译。</li>
+<li>C++子类对象的析构过程。先调用父类的析构函数，再调用子类的析构函数。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line"></span><br><span class="line">class Spear</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    Spear(const std::string &amp;name_, std::string &amp;icon_)</span><br><span class="line">    &#123;</span><br><span class="line">        name = name_;</span><br><span class="line">        icon = icon_;</span><br><span class="line">    &#125;</span><br><span class="line">    ~Spear()</span><br><span class="line">    &#123;</span><br><span class="line">        std::cout &lt;&lt; &quot;spear&quot; &lt;&lt; std::endl;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">    std::string name;</span><br><span class="line">    std::string icon;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">class FireSpear : public Spear</span><br><span class="line">&#123;</span><br><span class="line">    //如果父类对象成员函数 private，子类继承到了该父类，但其实无法对齐成员变量进行调用</span><br><span class="line">    //如果要调用，父类成员变量必须声明protected</span><br><span class="line">public:</span><br><span class="line">    FireSpear(const std::string &amp;name_, std::string &amp;icon_, int i_) : Spear(name_, icon_), i(i_)</span><br><span class="line">    &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ~FireSpear()</span><br><span class="line">    &#123;</span><br><span class="line">        std::cout &lt;&lt; &quot;FireSpear&quot; &lt;&lt; std::endl;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">    int i;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">class IceSpear : public Spear</span><br><span class="line">&#123;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    // Spear *pSpear = new Spear();</span><br><span class="line">    // Spear *pSpear = new FireSpear();</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>总结：面向对象三大特性的继承就这么简单，很多人觉得类继承很复杂，其实完全不是这样的，只要明白子类在内存上其实就相当于把父类的成员变量放在子类的成员变量前面罢了。构造和析构过程也是为了这个机制而设计的。</p>
+<h2 id="七、虚函数及其实现原理，override关键字"><a href="#七、虚函数及其实现原理，override关键字" class="headerlink" title="七、虚函数及其实现原理，override关键字"></a>七、虚函数及其实现原理，override关键字</h2><ol>
+<li>虚函数介绍：</li>
+</ol>
+<ul>
+<li>虚函数就是面向对象的第三大特点：多态。多态非常的重要，它完美解决了上一课设计游戏装备类的问题，我们可以只设计一个函数，函数参数是基类指针，就可以调用子类的功能。比如射击游戏，所有的枪都继承自一个枪的基类，人类只要有一个开枪的函数就可以实现所有枪打出不同的子弹。</li>
+<li>父类指针可以指向子类对象，这个是自然而然的，因为子类对象的内存前面就是父类成员，类型完全匹配。（不要死记硬背，尽量理解原理）</li>
+<li>当父类指针指向子类对象，且子类重写父类某一函数时。父类指针调用该函数，就会产生以下的可能<ul>
+<li><strong>该函数为虚函数：父类指针调用的是子类的成员函数。</strong></li>
+<li><strong>该函数不是虚函数：父类指针调用的是父类的成员函数。</strong></li>
+</ul>
+</li>
+</ul>
+<ol start="2">
+<li>虚函数的注意事项：</li>
+</ol>
+<ul>
+<li><strong>子父类的虚函数必须完全相同</strong>，为了防止开发人员一不小心将函数写错，于是C++11添加了override关键字。</li>
+</ul>
+<ul>
+<li>(*) 父类的析构函数必须为虚函数：这一点很重要，当父类对象指向子类对象时，容易使独属于子类的内存泄露。会造成内存泄露的严重问题。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line"></span><br><span class="line">class Spear</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    Spear(const std::string &amp;name_, const std::string &amp;icon_) : name(name_), icon(icon_)</span><br><span class="line">    &#123;</span><br><span class="line">        std::cout &lt;&lt; &quot;spear&quot; &lt;&lt; std::endl;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    virtual ~Spear() //父类析构函数需要加virtual</span><br><span class="line">    &#123;</span><br><span class="line">        std::cout &lt;&lt; &quot;spear&quot; &lt;&lt; std::endl;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    virtual void openFire() const</span><br><span class="line">    &#123;</span><br><span class="line">        std::cout &lt;&lt; &quot;Spear spear:open fire&quot; &lt;&lt; std::endl;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">    std::string name;</span><br><span class="line">    std::string icon;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">class FireSpear : public Spear</span><br><span class="line">&#123;</span><br><span class="line">    //如果父类对象成员函数 private，子类继承到了该父类，但其实无法对齐成员变量进行调用</span><br><span class="line">    //如果要调用，父类成员变量必须声明protected</span><br><span class="line">public:</span><br><span class="line">    FireSpear(const std::string &amp;name_, const std::string &amp;icon_, int i_) : Spear(name_, icon_), i(i_)</span><br><span class="line">    &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ~FireSpear()</span><br><span class="line">    &#123;</span><br><span class="line">        std::cout &lt;&lt; &quot;FireSpear&quot; &lt;&lt; std::endl;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    virtual void openFire() const override</span><br><span class="line">    &#123;</span><br><span class="line">        std::cout &lt;&lt; &quot;FireSpear :open fire&quot; &lt;&lt; std::endl;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">    int i;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">class IceSpear : public Spear</span><br><span class="line">&#123;</span><br><span class="line">    virtual void openFire() const override</span><br><span class="line">    &#123;</span><br><span class="line">        std::cout &lt;&lt; &quot;ice spear:open fire&quot; &lt;&lt; std::endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">void openFire(const Spear *pSpear)</span><br><span class="line">&#123;</span><br><span class="line">    pSpear-&gt;openFire();</span><br><span class="line">    delete pSpear;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    // Spear *pSpear = new Spear();</span><br><span class="line">    // Spear *pSpear = new FireSpear();</span><br><span class="line">    openFire(new FireSpear(&quot;fire&quot;, &quot;sss&quot;, 1)); //父类的openFire与子类的openFire都非虚函数，调用父类的成员函数</span><br><span class="line">    openFire(new FireSpear(&quot;fire&quot;, &quot;sss&quot;, 1)); //加了virtual关键字之后，就会调用子类的openFire函数</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>虚函数实现多态的原理介绍</li>
+</ol>
+<ul>
+<li>动态绑定和静态绑定：<ul>
+<li>静态绑定：程序在编译时就已经确定了函数的地址，比如非虚函数就是静态绑定。</li>
+<li>动态绑定：程序在编译时确定的是程序寻找函数地址的方法，只有在程序运行时才可以真正确定程序的地址，比如虚函数就是动态绑定。</li>
+</ul>
+</li>
+<li>虚函数是如何实现动态绑定的呢？<ul>
+<li>每个有虚函数的类都会有一个虚函数表，对象其实就是指向虚函数表的指针，编译时编译器只告诉了程序会在运行时查找虚函数表的对应函数。每个类都会有自己的虚函数表，所以当父类指针引用的是子类虚函数表时，自然调用的就是子类的函数。</li>
+</ul>
+</li>
+</ul>
+<h2 id="八、静态成员变量与静态函数"><a href="#八、静态成员变量与静态函数" class="headerlink" title="八、静态成员变量与静态函数"></a>八、静态成员变量与静态函数</h2><ol>
+<li>静态成员变量：</li>
+</ol>
+<ul>
+<li>静态成员变量，在编译期就已经在静态变量区明确了地址，所以生命周期为程序从开始运行到结束，作用范围为与普通的成员变量相同。这些对于类的静态成员变量同样适用。</li>
+</ul>
+<ul>
+<li>类的静态成员变量因为创建在静态变量区，所以直接属于类，也就是我们可以直接通过类名来调用，当然通过对象调用也可以。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">class Cpp</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">public:</span><br><span class="line">    static unsigned int i;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">unsigned Cpp::i = 200;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    std::cout &lt;&lt; Cpp::i &lt;&lt; std::endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>静态成员变量的注意项：</li>
+</ol>
+<ul>
+<li><strong>静态成员变量必须在类外进行初始化</strong>，否则会报未定义的错误，不能用构造函数进行初始化。因为静态成员变量在静态变量区，只有一份，而且静态成员变量在编译期就要被创建，成员函数那都是运行期的事情了</li>
+</ul>
+<ol start="3">
+<li>静态成员函数的特点：<strong>静态成员函数就是为静态成员变量设计的，就是为了维持封装性。 和普通成员函数没有区别，都在代码区。</strong></li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">class Cpp</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    static unsigned getI()</span><br><span class="line">    &#123;</span><br><span class="line">        return i;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">    static unsigned int i;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">unsigned Cpp::i = 200;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    std::cout &lt;&lt; Cpp::i &lt;&lt; std::endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="九、（-）纯虚函数"><a href="#九、（-）纯虚函数" class="headerlink" title="九、（*）纯虚函数"></a>九、（*）纯虚函数</h2><ol>
+<li>纯虚函数介绍：</li>
+</ol>
+<p><strong>任何一个成员函数后面加上=0，该函数就变成了纯虚函数，可以不用实现，该函数所在的类就会变成虚基类，无法产生对象</strong></p>
+<p>所以纯虚函数的语法诞生了，只要将一个虚函数写为纯虚函数，那么该类将被认为无实际意义的类，无法产生对象。纯虚函数也不用去写实际部分。写了编译期也会自动忽略。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line"></span><br><span class="line">class Spear</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    Spear(const std::string &amp;name_, const std::string &amp;icon_) : name(name_), icon(icon_)</span><br><span class="line">    &#123;</span><br><span class="line">        std::cout &lt;&lt; &quot;spear&quot; &lt;&lt; std::endl;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    virtual ~Spear() //父类析构函数需要加virtual</span><br><span class="line">    &#123;</span><br><span class="line">        std::cout &lt;&lt; &quot;spear&quot; &lt;&lt; std::endl;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    virtual void openFire() const=0;</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">    std::string name;</span><br><span class="line">    std::string icon;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">class FireSpear : public Spear</span><br><span class="line">&#123;</span><br><span class="line">    //如果父类对象成员函数 private，子类继承到了该父类，但其实无法对齐成员变量进行调用</span><br><span class="line">    //如果要调用，父类成员变量必须声明protected</span><br><span class="line">public:</span><br><span class="line">    FireSpear(const std::string &amp;name_, const std::string &amp;icon_, int i_) : Spear(name_, icon_), i(i_)</span><br><span class="line">    &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ~FireSpear()</span><br><span class="line">    &#123;</span><br><span class="line">        std::cout &lt;&lt; &quot;FireSpear&quot; &lt;&lt; std::endl;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    virtual void openFire() const override</span><br><span class="line">    &#123;</span><br><span class="line">        std::cout &lt;&lt; &quot;FireSpear :open fire&quot; &lt;&lt; std::endl;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">    int i;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">class IceSpear : public Spear</span><br><span class="line">&#123;</span><br><span class="line">    virtual void openFire() const override</span><br><span class="line">    &#123;</span><br><span class="line">        std::cout &lt;&lt; &quot;ice spear:open fire&quot; &lt;&lt; std::endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">void openFire(const Spear *pSpear)</span><br><span class="line">&#123;</span><br><span class="line">    pSpear-&gt;openFire();</span><br><span class="line">    delete pSpear;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    // Spear *pSpear = new Spear();</span><br><span class="line">    // Spear *pSpear = new FireSpear();</span><br><span class="line">    openFire(new FireSpear(&quot;fire&quot;, &quot;sss&quot;, 1)); //父类的openFire与子类的openFire都非虚函数，调用父类的成员函数</span><br><span class="line">    openFire(new FireSpear(&quot;fire&quot;, &quot;sss&quot;, 1)); //加了virtual关键字之后，就会调用子类的openFire函数</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="十、RTTI"><a href="#十、RTTI" class="headerlink" title="十、RTTI"></a>十、RTTI</h2><ol>
+<li>RTTI介绍：</li>
+</ol>
+<ul>
+<li>RTTI（Run Time Type Identification）即通过运行时类型识别，程序能够通过基类的指针或引用来检查这些指针或引用所指向的对象的实际派生类。</li>
+<li>C++ 为了支持多态，C++ 的指针或引用的类型可能与它实际指向对象的类型不相同，这时就需要rtti去判断类的实际类型了，rtti是C++判断指针或引用实际类型的唯一方式。</li>
+</ul>
+<ol start="2">
+<li>RTTI的使用场景：</li>
+</ol>
+<ul>
+<li>异常处理：这是RTTI最主要的使用场景</li>
+<li>IO操作</li>
+</ul>
+<ol start="3">
+<li>RTTI的使用方式：RTTI的使用过程就两个函数</li>
+</ol>
+<ul>
+<li><p>typeid函数：typeid函数返回的一个叫做type_info的结构体，该结构体包括了所指向对象的实际信息，其中name()函数就可以返回函数的真实名称。type_info结构体其他函数没什么用.</p>
+</li>
+<li><p>dynamic_cast函数：C++提供的将父类指针转化为子类指针的函数。</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line"></span><br><span class="line">class Spear</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    Spear(const std::string &amp;name_, const std::string &amp;icon_) : name(name_), icon(icon_)</span><br><span class="line">    &#123;</span><br><span class="line">        std::cout &lt;&lt; &quot;spear&quot; &lt;&lt; std::endl;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    virtual ~Spear() //父类析构函数需要加virtual</span><br><span class="line">    &#123;</span><br><span class="line">        std::cout &lt;&lt; &quot;spear&quot; &lt;&lt; std::endl;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    virtual void openFire() const=0;</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">    std::string name;</span><br><span class="line">    std::string icon;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">class FireSpear : public Spear</span><br><span class="line">&#123;</span><br><span class="line">    //如果父类对象成员函数 private，子类继承到了该父类，但其实无法对齐成员变量进行调用</span><br><span class="line">    //如果要调用，父类成员变量必须声明protected</span><br><span class="line">public:</span><br><span class="line">    FireSpear(const std::string &amp;name_, const std::string &amp;icon_, int i_) : Spear(name_, icon_), i(i_)</span><br><span class="line">    &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ~FireSpear()</span><br><span class="line">    &#123;</span><br><span class="line">        std::cout &lt;&lt; &quot;FireSpear&quot; &lt;&lt; std::endl;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    virtual void openFire() const override</span><br><span class="line">    &#123;</span><br><span class="line">        std::cout &lt;&lt; &quot;FireSpear :open fire&quot; &lt;&lt; std::endl;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">    int i;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">class IceSpear : public Spear</span><br><span class="line">&#123;</span><br><span class="line">    virtual void openFire() const override</span><br><span class="line">    &#123;</span><br><span class="line">        std::cout &lt;&lt; &quot;ice spear:open fire&quot; &lt;&lt; std::endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">void openFire(const Spear *pSpear)</span><br><span class="line">&#123;</span><br><span class="line">    pSpear-&gt;openFire();</span><br><span class="line">    delete pSpear;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    Spear *pSpear = new FireSpear(&quot;asd&quot;,&quot;fsd&quot;,20);</span><br><span class="line">    std::cout&lt;&lt;&quot;start&quot;&lt;&lt;std::endl;</span><br><span class="line">    std::cout&lt;&lt;std::string(typeid(*pSpear).name())&lt;&lt;std::endl;</span><br><span class="line">    // if (std::string(typeid(*pSpear).name())==&quot;class FireSpear&quot;)</span><br><span class="line">    if (std::string(typeid(*pSpear).name())==&quot;9FireSpear&quot;)</span><br><span class="line">    &#123;</span><br><span class="line">        FireSpear *pFireSpear=dynamic_cast&lt;FireSpear*&gt;(pSpear);</span><br><span class="line">        if (pFireSpear)</span><br><span class="line">        &#123;</span><br><span class="line">            std::cout&lt;&lt;&quot;cast FireSpear success&quot;&lt;&lt;std::endl;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    if (std::string(typeid(*pSpear).name())==&quot;class IceSpear&quot;)</span><br><span class="line">    &#123;</span><br><span class="line">        IceSpear *pFireSpear=dynamic_cast&lt;IceSpear*&gt;(pSpear);</span><br><span class="line">        if (pFireSpear)</span><br><span class="line">        &#123;</span><br><span class="line">            std::cout&lt;&lt;&quot;cast IceSpear success&quot;&lt;&lt;std::endl;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    delete pSpear;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>RTTI的注意事项：</li>
+</ol>
+<ul>
+<li>当使用typeid函数时，父类和子类必须有虚函数（父类有了虚函数，子类自然会有虚函数），否则类型判断会出错。</li>
+</ul>
+<ol start="5">
+<li>RTTI总结：就是C++在运行阶段判断对象实际类型的唯一方式。</li>
+</ol>
+<h2 id="十一、多继承"><a href="#十一、多继承" class="headerlink" title="十一、多继承"></a>十一、多继承</h2><ol>
+<li>多继承的概念</li>
+</ol>
+<ul>
+<li>就是一个类同时继承多个类，在内存上，该类对象前面依次为第一个继承的类，第二个继承的类，依次类推。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line"></span><br><span class="line">class Base1</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    Base1(int base1I_) : base1I(base1I_) &#123;&#125;</span><br><span class="line"></span><br><span class="line">protected:</span><br><span class="line">    int base1I;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">class Base2</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    Base2(int base2I_) : base2I(base2I_) &#123;&#125;</span><br><span class="line"></span><br><span class="line">protected:</span><br><span class="line">    int base2I;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">class Derived : public Base1, public Base2</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    Derived(int base1I_, int base2I_, int sub_) : Base1(base1I), Base2(base2I_), sub(sub_) &#123;&#125;</span><br><span class="line"></span><br><span class="line">protected:</span><br><span class="line">    int sub;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    Derived derived = Derived(10, 20, 30);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>多继承的注意点：</li>
+</ol>
+<ul>
+<li>多继承最需要注意的点就是重复继承的问题</li>
+<li>多继承会使整个程序的设计更加复杂，平常不推荐使用。C++ 语言中用到多继承的地方主要就是接口模式。相较于C++ ，java直接取消了多继承的功能，添加了接口。</li>
+</ul>
+<ol start="3">
+<li>多继承的总结：多继承这个语法虽然在某些情况下使代码写起来更加简洁，但会使程序更加复杂难懂，一般来说除了接口模式不推荐使用。</li>
+</ol>
+<h2 id="十二、虚继承及其实现原理"><a href="#十二、虚继承及其实现原理" class="headerlink" title="十二、虚继承及其实现原理"></a>十二、虚继承及其实现原理</h2><ol>
+<li>虚继承的概念：虚继承就是为了避免多重继承时产生的二义性问题。虚继承的问题用语言不好描述，但用代码非常简单，所以直接写代码了。</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line"></span><br><span class="line">class TrueBase</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    int i = 100;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">class Base1 : virtual public TrueBase</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    Base1(int base1I_) : base1I(base1I_) &#123;&#125;</span><br><span class="line"></span><br><span class="line">    int base1I;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">class Base2 : virtual public TrueBase</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    Base2(int base2I_) : base2I(base2I_) &#123;&#125;</span><br><span class="line"></span><br><span class="line">    int base2I;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">class Derived : public Base1, public Base2</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    Derived(int base1I_, int base2I_, int sub_) : Base1(base1I), Base2(base2I_), sub(sub_) &#123;&#125;</span><br><span class="line"></span><br><span class="line">protected:</span><br><span class="line">    int sub;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    Derived derived = Derived(10, 20, 30);</span><br><span class="line">    std::cout &lt;&lt; derived.i &lt;&lt; std::endl; //正常情况，子类并不知道到底是调用父类哪个i，因此需要虚继承</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>虚继承的实现原理介绍：</li>
+</ol>
+<ul>
+<li>使用了虚继承的类会有一个虚继承表，表中存放了父类所有成员变量相对于类的偏移地址。</li>
+<li>按照刚才的代码，B1，B2类同时有一个虚继承表，当C类同时继承B1和B2类时，每继承一个就会用虚继承表进行比对，发现该变量在虚继承表中偏移地址相同，就只会继承一份。</li>
+</ul>
+<ol start="3">
+<li><p>虚继承的注意点：没什么需要注意的，语法简单。</p>
+</li>
+<li><p>虚继承的总结：这个语法就是典型的语法简单，但在游戏开发领域经常使用的语法，其它领域使用频率会低很多。</p>
+</li>
+</ol>
+<h2 id="十三、（-）移动构造函数与移动赋值运算符"><a href="#十三、（-）移动构造函数与移动赋值运算符" class="headerlink" title="十三、（**）移动构造函数与移动赋值运算符"></a>十三、（**）移动构造函数与移动赋值运算符</h2><ol>
+<li>对象移动的概念：</li>
+</ol>
+<ul>
+<li>对一个体积比较大的类进行大量的拷贝操作是非常消耗性能的，因此C++11中加入了“对象移动”的操作</li>
+<li>所谓的对象移动，其实就是把该对象占据的内存空间的访问权限转移给另一个对象。比如一块内存原本属于A，在进行“移动语义”后，这块内存就属于B了。</li>
+</ul>
+<ol start="2">
+<li>移动语义为什么可以提高程序运行效率。因为我们的各种操作经常会进行大量的“复制构造”，“赋值运算”操作。这两个操作非常耗费时间。移动构造是直接转移权限，这是不是就快多了。<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;cstring&gt;</span><br><span class="line"></span><br><span class="line">class Test</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">    Test() = default;</span><br><span class="line">    Test(const Test &amp;test)</span><br><span class="line">    &#123;</span><br><span class="line">        if (test.str)</span><br><span class="line">        &#123;</span><br><span class="line">            str = new char[strlen(test.str) + 1]();</span><br><span class="line">            strcpy_s(str, strlen(test.str) + 1, test.str);</span><br><span class="line">        &#125;</span><br><span class="line">        else</span><br><span class="line">        &#123;</span><br><span class="line">            str = nullptr;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    /**</span><br><span class="line">     * @brief Construct a new Test object</span><br><span class="line">     * 移动构造函数</span><br><span class="line">     * @param test</span><br><span class="line">     */</span><br><span class="line">    Test(Test &amp;&amp;test)</span><br><span class="line">    &#123;</span><br><span class="line">        if (test.str)</span><br><span class="line">        &#123;</span><br><span class="line">            //直接转移权限</span><br><span class="line">            str = test.str;</span><br><span class="line">            test.str = nullptr; //需要修改 形参对象，因此不能对形参加const</span><br><span class="line">        &#125;</span><br><span class="line">        else</span><br><span class="line">        &#123;</span><br><span class="line">            str = nullptr;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    Test &amp;operator=(const Test &amp;test)</span><br><span class="line">    &#123;</span><br><span class="line">        if (this == &amp;test)</span><br><span class="line">        &#123;</span><br><span class="line">            return *this;</span><br><span class="line">        &#125;</span><br><span class="line">        //判断str是否为空</span><br><span class="line">        if (str)</span><br><span class="line">        &#123;</span><br><span class="line">            delete[] str;</span><br><span class="line">            str = nullptr;</span><br><span class="line">        &#125;</span><br><span class="line">        //判断形参对象是否是空字符串</span><br><span class="line">        if (test.str)</span><br><span class="line">        &#123;</span><br><span class="line">            str = new char[strlen(test.str) + 1]();</span><br><span class="line">            strcpy_s(str, strlen(test.str) + 1, test.str);</span><br><span class="line">        &#125;</span><br><span class="line">        else</span><br><span class="line">        &#123;</span><br><span class="line">            str = nullptr;</span><br><span class="line">        &#125;</span><br><span class="line">        return *this;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Test &amp;operator=(Test &amp;&amp;test)</span><br><span class="line">    &#123;</span><br><span class="line">        if (this == &amp;test)</span><br><span class="line">        &#123;</span><br><span class="line">            return *this;</span><br><span class="line">        &#125;</span><br><span class="line">        //判断str是否为空</span><br><span class="line">        if (str)</span><br><span class="line">        &#123;</span><br><span class="line">            delete[] str;</span><br><span class="line">            str = nullptr;</span><br><span class="line">        &#125;</span><br><span class="line">        if (test.str)</span><br><span class="line">        &#123;</span><br><span class="line">            str = test.str;</span><br><span class="line">            test.str = nullptr;</span><br><span class="line">        &#125;</span><br><span class="line">        else</span><br><span class="line">        &#123;</span><br><span class="line">            str = nullptr;</span><br><span class="line">        &#125;</span><br><span class="line">        return *this;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">    char *str = nullptr;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">Test makeTest()</span><br><span class="line">&#123;</span><br><span class="line">    Test t;</span><br><span class="line">    return t;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    Test t=makeTest();</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>注意：在进行转移操作后，被转移的对象就不能继续使用了，所以对象移动一般都是对临时对象进行操作（因为临时对象很快就要销毁了）。</p>
+<p>注意这里的右值引用不能是const的，因为你用右值引用函数参数就算为了让其绑定到一个右值上去的！就是说这个右值引用是一定要变的，但是你一旦加了const就没法改变该右值引用了。</p>
+<ol start="3">
+<li>默认移动构造函数和默认移动赋值运算符</li>
+</ol>
+<p>会默认生成移动构造函数和移动赋值运算符的条件：</p>
+<ul>
+<li>只有一个类没有定义任何自己版本的拷贝操作（拷贝构造，拷贝赋值运算符），且类的每个非静态成员都可以移动，系统才能为我们合成。</li>
+</ul>
+<ol start="4">
+<li>可以移动的意思就是可以就行移动构造，移动赋值。<strong>所有的基础类型都是可以移动的，有移动语义的类也是可以移动的。</strong></li>
+</ol>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">CinKate</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://renxingkai.github.io/2022/08/21/cpp-object/">http://renxingkai.github.io/2022/08/21/cpp-object/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/C/">C++</a></div><div class="social-share pull-right" data-disabled="google,facebook"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script><nav id="pagination"><div class="next-post pull-right"><a href="/2022/08/17/cpp-base/"><span>C++新特性系列一：基础知识</span><i class="fa fa-chevron-right"></i></a></div></nav></div></div><footer class="footer-bg" style="background-image: url(http://p17.qhimg.com/d/_open360/fengjing0403/21.jpg)"><div class="layout" id="footer"><div class="copyright">&copy;2019 - 2022 By CinKate</div><div class="framework-info"><span>Driven - </span><a href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>Theme - </span><a href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="footer_custom_text">Hi, welcome to my <a href="https://renxingkai.github.io">blog</a>!</div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file-o"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.9.0"></script><script src="/js/fancybox.js?version=1.9.0"></script><script src="/js/sidebar.js?version=1.9.0"></script><script src="/js/copy.js?version=1.9.0"></script><script src="/js/fireworks.js?version=1.9.0"></script><script src="/js/transition.js?version=1.9.0"></script><script src="/js/scroll.js?version=1.9.0"></script><script src="/js/head.js?version=1.9.0"></script><script type="text/x-mathjax-config">MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+    processEscapes: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+  },
+  CommonHTML: {
+    linebreaks: { automatic: true, width: "90% container" }
+  },
+  "HTML-CSS": { 
+    linebreaks: { automatic: true, width: "90% container" }
+  },
+  "SVG": { 
+    linebreaks: { automatic: true, width: "90% container" }
+  }
+});
+</script><script type="text/x-mathjax-config">MathJax.Hub.Queue(function() {
+  var all = MathJax.Hub.getAllJax(), i;
+  for (i=0; i < all.length; i += 1) {
+    all[i].SourceElement().parentNode.className += ' has-jax';
+  }
+});
+</script><script src="https://cdn.jsdelivr.net/npm/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css"><script src="/js/katex.js"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script></body></html>
