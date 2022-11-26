@@ -1,0 +1,86 @@
+<!DOCTYPE html><html lang="en"><head><meta name="generator" content="Hexo 3.9.0"><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="PERT PRE-TRAINING BERT WITH PERMUTED LANGUAGE MODEL 阅读笔记"><meta name="keywords" content="预训练语言模型"><meta name="author" content="CinKate"><meta name="copyright" content="CinKate"><title>PERT PRE-TRAINING BERT WITH PERMUTED LANGUAGE MODEL 阅读笔记 | CinKate's Blogs</title><link rel="shortcut icon" href="/melody-favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.9.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.9.0"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css?version=1.9.0"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="dns-prefetch" href="https://hm.baidu.com"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?b77222dd6b9929f160b8a04fc8705337";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();</script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  hexoVersion: '3.9.0'
+} </script></head><body><canvas class="fireworks"></canvas><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="Toggle article">Toggle site</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Abstract"><span class="toc-number">1.</span> <span class="toc-text">Abstract</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Introduction"><span class="toc-number">2.</span> <span class="toc-text">1.Introduction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Related-Work"><span class="toc-number">3.</span> <span class="toc-text">2.Related Work</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-PERT"><span class="toc-number">4.</span> <span class="toc-text">3.PERT</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-Overview"><span class="toc-number">4.1.</span> <span class="toc-text">3.1 Overview</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-PERMUTED-LANGUAGE-MODEL"><span class="toc-number">4.2.</span> <span class="toc-text">3.2 PERMUTED LANGUAGE MODEL</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-PRE-TRAINING-STAGE"><span class="toc-number">4.3.</span> <span class="toc-text">3.3 PRE-TRAINING STAGE</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-FINE-TUNING-STAGE"><span class="toc-number">4.4.</span> <span class="toc-text">3.4 FINE-TUNING STAGE</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-EXPERIMENTS-ON-CHINESE-TASKS"><span class="toc-number">5.</span> <span class="toc-text">4 EXPERIMENTS ON CHINESE TASKS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-Conclusion"><span class="toc-number">6.</span> <span class="toc-text">7.Conclusion</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="http://imgsrc.baidu.com/forum/w%3D580/sign=f8de0e9b3e87e9504217f3642039531b/1c3bd133c895d143e395e57b77f082025baf0726.jpg"></div><div class="author-info__name text-center">CinKate</div><div class="author-info__description text-center">长笛一声人倚楼~</div><div class="follow-button"><a href="https://github.com/renxingkai">Follow Me</a></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">Articles</span><span class="pull-right">53</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">Tags</span><span class="pull-right">33</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">Categories</span><span class="pull-right">17</span></a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(http://p17.qhimg.com/d/_open360/fengjing0403/21.jpg)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">CinKate's Blogs</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a><a class="site-page" href="/about">About</a></span><span class="pull-right"></span></div><div id="post-info"><div id="post-title">PERT PRE-TRAINING BERT WITH PERMUTED LANGUAGE MODEL 阅读笔记</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2022-11-26</time><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/自然语言处理/">自然语言处理</a><div class="post-meta-wordcount"><span>Word count: </span><span class="word-count">966</span><span class="post-meta__separator">|</span><span>Reading time: 3 min</span></div></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><p>论文链接：<a href="https://arxiv.org/abs/2203.06906" target="_blank" rel="noopener">https://arxiv.org/abs/2203.06906</a></p>
+<p>模型链接：<a href="https://github.com/ymcui/PERT" target="_blank" rel="noopener">https://github.com/ymcui/PERT</a></p>
+<h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>本文提出了PERT，它主要用于NLU任务，且是一个基于全排列的自编码语言模型。主要思路是对输入文本的一部分进行全排列，训练目标是预测出原始字符的位置，同时也使用了WWM(全词掩码)与N-gram掩码去提升PERT的性能。在中英文数据集上进行了实验，发现部分任务有明显的提升。</p>
+<h2 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1.Introduction"></a>1.Introduction</h2><p>预训练模型通常有两种训练模式：以BERT为代表的自编码方式和以GPT为代表的自回归方式。基于MLM任务，有不少的改进方式，比如WWM，N-gram等，因此也诞生了ERNIE、RoBERTa、ALBERT、ELECTRA、MacBERT等模型。</p>
+<p>本文探索了非MLM相关的预训练任务，动机很有趣，<strong>很多谚语篡改几个汉字不会影响你的阅读</strong>。如图1所示，打乱几个字的顺序，并不会改变人们对句子的理解。基于此想法，本文提出了一个新的预训练任务，permuted language model (PerLM)，<strong>PerLM试图从无序的句子中恢复字符的顺序，其目的是预测原始字符的位置</strong>。<br><img src="https://rxk-1300064984.cos.ap-nanjing.myqcloud.com/img/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20221126100521.png" alt></p>
+<h2 id="2-Related-Work"><a href="#2-Related-Work" class="headerlink" title="2.Related Work"></a>2.Related Work</h2><p>相关工作直接贴个原文表格吧，各种预训练模型的特点表格已基本说明。<br><img src="https://rxk-1300064984.cos.ap-nanjing.myqcloud.com/img/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20221126100849.png" alt></p>
+<h2 id="3-PERT"><a href="#3-PERT" class="headerlink" title="3.PERT"></a>3.PERT</h2><h3 id="3-1-Overview"><a href="#3-1-Overview" class="headerlink" title="3.1 Overview"></a>3.1 Overview</h3><p>PERT的输入为乱序的句子，训练目标是预测原始字符的位置。</p>
+<ul>
+<li>PERT采用了和BERT一样的切词WordPiece、词表等。</li>
+<li>PERT没有[MASK]字符。</li>
+<li>预测的空间是基于输入的句子的，而不是整个词表空间。</li>
+<li>由于PERT的主体与BERT相同，通过适当的微调，BERT可以直接被PERT取代。</li>
+</ul>
+<p><img src="https://rxk-1300064984.cos.ap-nanjing.myqcloud.com/img/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20221126190751.png" alt></p>
+<h3 id="3-2-PERMUTED-LANGUAGE-MODEL"><a href="#3-2-PERMUTED-LANGUAGE-MODEL" class="headerlink" title="3.2 PERMUTED LANGUAGE MODEL"></a>3.2 PERMUTED LANGUAGE MODEL</h3><p>本文没有使用NSP任务，仅用了PerLM任务。</p>
+<ul>
+<li>本文使用了WWM与N-gram Mask进行候选词Mask的选择，分别有40%、30%、20%、10%的概率完成单字Mask到4-gram的Mask</li>
+<li>在前面的工作之后，本文使用了15%的输入词来进行Mask。<br>其中，<ul>
+<li>本文随机选择90%的字符并打乱它们的顺序。</li>
+<li>对于其余10%的字符，保持不变，将其视为负样本。</li>
+</ul>
+</li>
+</ul>
+<p>PerLM与MLM相比的特性如下：</p>
+<ul>
+<li>PerLM没有使用[MASK]字符，缓解了预训练-微调之间的偏差问题。</li>
+<li>相比MLM任务，PerLM预测空间是句子，而不是整个词表，比MLM任务效率更高。</li>
+</ul>
+<h3 id="3-3-PRE-TRAINING-STAGE"><a href="#3-3-PRE-TRAINING-STAGE" class="headerlink" title="3.3 PRE-TRAINING STAGE"></a>3.3 PRE-TRAINING STAGE</h3><p>给定句子A和句子B，完成随机字符打乱之后，拼接在一起输入到PERT中。</p>
+<p><img src="https://rxk-1300064984.cos.ap-nanjing.myqcloud.com/img/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20221126194033.png" alt></p>
+<p>经过Embedding层与L层的Transformer结构<br><img src="https://rxk-1300064984.cos.ap-nanjing.myqcloud.com/img/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20221126194216.png" alt></p>
+<p>PERT只需要去预测所选定的位置，最后经过一个FFN与LayerNorm,使用softmax输出标准化之后的概率分布，损失函数为交叉熵。</p>
+<h3 id="3-4-FINE-TUNING-STAGE"><a href="#3-4-FINE-TUNING-STAGE" class="headerlink" title="3.4 FINE-TUNING STAGE"></a>3.4 FINE-TUNING STAGE</h3><p>微调阶段PERT与BERT相似，可以进行直接替换，当然，微调阶段是不需要打乱句子的顺序的，直接输入原始句子就可以。</p>
+<h2 id="4-EXPERIMENTS-ON-CHINESE-TASKS"><a href="#4-EXPERIMENTS-ON-CHINESE-TASKS" class="headerlink" title="4 EXPERIMENTS ON CHINESE TASKS"></a>4 EXPERIMENTS ON CHINESE TASKS</h2><p>具体训练参数，可以参考原论文。</p>
+<p>本文PERT在阅读理解MRC，文本分类TC，命名实体识别NER等任务中进行了实验。</p>
+<p><img src="https://rxk-1300064984.cos.ap-nanjing.myqcloud.com/img/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20221126195415.png" alt></p>
+<p><img src="https://rxk-1300064984.cos.ap-nanjing.myqcloud.com/img/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20221126195548.png" alt></p>
+<p><img src="https://rxk-1300064984.cos.ap-nanjing.myqcloud.com/img/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20221126195622.png" alt></p>
+<p>在MRC与NER任务上，PERT表现还是不错的，即使在英文数据集上也是如此。</p>
+<p><img src="https://rxk-1300064984.cos.ap-nanjing.myqcloud.com/img/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20221126195803.png" alt></p>
+<h2 id="7-Conclusion"><a href="#7-Conclusion" class="headerlink" title="7.Conclusion"></a>7.Conclusion</h2><p>与MLM训练任务不同，本文提出的PERT训练目标是预测被打乱字符的原始位置。该模型在MRC于NER相关任务上有了不错的提升，但是文本分类没有明显提升。</p>
+<p>最后值得一提的是，PERT在文本纠错与乱序任务上表现不错，当然这也和它预训练-微调任务一致性有很大的关系。前段时间科大讯飞比赛的一个题目，仅用PERT就比BERT、RoBERTa等模型性能要高不少。</p>
+<p><img src="https://rxk-1300064984.cos.ap-nanjing.myqcloud.com/img/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20221126200057.png" alt></p>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">CinKate</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://renxingkai.github.io/2022/11/27/pert/">http://renxingkai.github.io/2022/11/27/pert/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/预训练语言模型/">预训练语言模型</a></div><div class="social-share pull-right" data-disabled="google,facebook"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script><nav id="pagination"><div class="next-post pull-right"><a href="/2022/08/29/cpp-stl/"><span>C++新特性系列四：STL</span><i class="fa fa-chevron-right"></i></a></div></nav></div></div><footer class="footer-bg" style="background-image: url(http://p17.qhimg.com/d/_open360/fengjing0403/21.jpg)"><div class="layout" id="footer"><div class="copyright">&copy;2019 - 2022 By CinKate</div><div class="framework-info"><span>Driven - </span><a href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>Theme - </span><a href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="footer_custom_text">Hi, welcome to my <a href="https://renxingkai.github.io">blog</a>!</div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file-o"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.9.0"></script><script src="/js/fancybox.js?version=1.9.0"></script><script src="/js/sidebar.js?version=1.9.0"></script><script src="/js/copy.js?version=1.9.0"></script><script src="/js/fireworks.js?version=1.9.0"></script><script src="/js/transition.js?version=1.9.0"></script><script src="/js/scroll.js?version=1.9.0"></script><script src="/js/head.js?version=1.9.0"></script><script type="text/x-mathjax-config">MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+    processEscapes: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+  },
+  CommonHTML: {
+    linebreaks: { automatic: true, width: "90% container" }
+  },
+  "HTML-CSS": { 
+    linebreaks: { automatic: true, width: "90% container" }
+  },
+  "SVG": { 
+    linebreaks: { automatic: true, width: "90% container" }
+  }
+});
+</script><script type="text/x-mathjax-config">MathJax.Hub.Queue(function() {
+  var all = MathJax.Hub.getAllJax(), i;
+  for (i=0; i < all.length; i += 1) {
+    all[i].SourceElement().parentNode.className += ' has-jax';
+  }
+});
+</script><script src="https://cdn.jsdelivr.net/npm/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css"><script src="/js/katex.js"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script></body></html>
