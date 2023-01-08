@@ -1,0 +1,113 @@
+<!DOCTYPE html><html lang="en"><head><meta name="generator" content="Hexo 3.9.0"><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="Personalized Re-ranking for Recommendation"><meta name="keywords" content="重排"><meta name="author" content="CinKate"><meta name="copyright" content="CinKate"><title>Personalized Re-ranking for Recommendation | CinKate's Blogs</title><link rel="shortcut icon" href="/melody-favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.9.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.9.0"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css?version=1.9.0"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="dns-prefetch" href="https://hm.baidu.com"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?b77222dd6b9929f160b8a04fc8705337";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();</script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  hexoVersion: '3.9.0'
+} </script></head><body><canvas class="fireworks"></canvas><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="Toggle article">Toggle site</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#ABSTRACT-摘要"><span class="toc-number">1.</span> <span class="toc-text">ABSTRACT (摘要)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-INTRODUCTION-介绍"><span class="toc-number">2.</span> <span class="toc-text">1 INTRODUCTION (介绍)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-RELATED-WORK-相关工作"><span class="toc-number">3.</span> <span class="toc-text">2 RELATED WORK (相关工作)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-RE-RANKING-MODEL-FORMULATION-重排模型公式"><span class="toc-number">4.</span> <span class="toc-text">3 RE-RANKING MODEL FORMULATION (重排模型公式)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-PERSONALIZED-RE-RANKING-MODEL-个性化的重排模型-PRM"><span class="toc-number">5.</span> <span class="toc-text">4 PERSONALIZED RE-RANKING MODEL (个性化的重排模型 PRM)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-Model-Architecture-模型结构"><span class="toc-number">5.1.</span> <span class="toc-text">4.1 Model Architecture(模型结构)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-Input-Layer-输入层"><span class="toc-number">5.2.</span> <span class="toc-text">4.2  Input Layer (输入层)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-Encoding-Layer-编码层"><span class="toc-number">5.3.</span> <span class="toc-text">4.3 Encoding Layer(编码层)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-4-Output-Layer-输出层"><span class="toc-number">5.4.</span> <span class="toc-text">4.4 Output Layer(输出层)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-5-Personalized-Module-个性化模块"><span class="toc-number">5.5.</span> <span class="toc-text">4.5 Personalized Module(个性化模块)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-EXPERIMENTAL-RESUTLS-实验结果"><span class="toc-number">6.</span> <span class="toc-text">5 EXPERIMENTAL RESUTLS (实验结果)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-CONCLUSION-AND-FUTURE-WORK"><span class="toc-number">7.</span> <span class="toc-text">6 CONCLUSION AND FUTURE WORK</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="http://imgsrc.baidu.com/forum/w%3D580/sign=f8de0e9b3e87e9504217f3642039531b/1c3bd133c895d143e395e57b77f082025baf0726.jpg"></div><div class="author-info__name text-center">CinKate</div><div class="author-info__description text-center">长笛一声人倚楼~</div><div class="follow-button"><a href="https://github.com/renxingkai">Follow Me</a></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">Articles</span><span class="pull-right">55</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">Tags</span><span class="pull-right">34</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">Categories</span><span class="pull-right">18</span></a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(http://p17.qhimg.com/d/_open360/fengjing0403/21.jpg)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">CinKate's Blogs</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a><a class="site-page" href="/about">About</a></span><span class="pull-right"></span></div><div id="post-info"><div id="post-title">Personalized Re-ranking for Recommendation</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2023-01-08</time><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/搜广推/">搜广推</a><div class="post-meta-wordcount"><span>Word count: </span><span class="word-count">1.6k</span><span class="post-meta__separator">|</span><span>Reading time: 5 min</span></div></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><h2 id="ABSTRACT-摘要"><a href="#ABSTRACT-摘要" class="headerlink" title="ABSTRACT (摘要)"></a>ABSTRACT (摘要)</h2><p>重排是推荐系统中一项核心任务，重排目标是为用户最终提供一个有序列表。通常，一个排序模型使用已标记的数据集从全局最优角度，为每个结果打出一个分数。然而，这样的做法可能是排序次优解，因为打分函数仅对每个结果独立打分，没有显示考虑到结果与结果之间的相互影响、用户的偏好与意图也考虑欠佳。本文提出了个性化的重排模型( Personalized Re-ranking Model ,PRM)，通过使用现有的排序特征向量，PRM可以方便地部属在任何精排模块之后。PRM使用Transfomer作为encoder，目标是直接优化推荐结果列表。采用Transfomer的一个原因是，其中的Self-attention模块直接对整个列表中任何一对结果之间的全局关系进行建模。同时本文也证实了，通过引入为预训练的embedding，学习个性化的encoder，可以进一步提升模型性能。在离线数据集与在线ab实验，PRM均取得了较大的提升。</p>
+<h2 id="1-INTRODUCTION-介绍"><a href="#1-INTRODUCTION-介绍" class="headerlink" title="1 INTRODUCTION (介绍)"></a>1 INTRODUCTION (介绍)</h2><p>通用的推荐系统中的排序只考虑user与item对的特征，而不考虑最终列表中其他item的影响，尤其是旁边的item。虽然pairwise、listwise已经使用了item-pair与item-list作为输入，但是它们只专注于使用点击类的标签数据来优化损失函数，并没有对item之间的相互影响进行显示地建模。</p>
+<p>本文贡献</p>
+<ul>
+<li>本文首次提出了一个推荐系统中的个性化重新排序问题，这是首次将个性化信息明确地引入到大规模在线系统中的重排任务。</li>
+<li>使用基于个性化embedding与Transfomer的PRM模型结构计算最终重排分数。</li>
+<li>发布了一个大规模的电商重排数据集。</li>
+<li>离线与在线PRM均取得了显著的提升。</li>
+</ul>
+<h2 id="2-RELATED-WORK-相关工作"><a href="#2-RELATED-WORK-相关工作" class="headerlink" title="2 RELATED WORK (相关工作)"></a>2 RELATED WORK (相关工作)</h2><p>由于该文章当时为重排早期文章，当时重排相关工作主要还是基于GRU、LSTM等模型展开。</p>
+<h2 id="3-RE-RANKING-MODEL-FORMULATION-重排模型公式"><a href="#3-RE-RANKING-MODEL-FORMULATION-重排模型公式" class="headerlink" title="3 RE-RANKING MODEL FORMULATION (重排模型公式)"></a>3 RE-RANKING MODEL FORMULATION (重排模型公式)</h2><p>本文所用到的符号说明：<br><img src="https://rxk-1300064984.cos.ap-nanjing.myqcloud.com/img/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20230107233039.png" alt></p>
+<p>传统LTR优化目标为：<br><img src="https://rxk-1300064984.cos.ap-nanjing.myqcloud.com/img/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20230107233517.png" alt><br>对照上面的表格，是能看懂该公式的。将item的特征<code>$x_i$</code>输入给模型，P为模型输出的概率，最终目标是最小化真实标签(点击/未点击)与模型预测概率之间的误差。</p>
+<p>本文认为仅用<code>$x_i$</code>是不充分的，还需要考虑额外的信息：</p>
+<ul>
+<li>item-pair之间的影响</li>
+<li>user-item之间的交互<br>item-pair之间的影响通过原始的排序结果<code>$S_r$</code>可以直接学习到。然而很少的研究会对user与items之间的交互进行考虑，本文引入个性化矩阵<code>$PV$</code>去学习用户特定编码函数，该函数能够对item对之间的个性化相互影响进行建模。</li>
+</ul>
+<p>本文重排模型建模目标为以下公式：</p>
+<p><img src="https://rxk-1300064984.cos.ap-nanjing.myqcloud.com/img/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20230107235439.png" alt></p>
+<p>引入PV(个性化向量)，仅对精排给出的列表中items进行优化排序结果。</p>
+<h2 id="4-PERSONALIZED-RE-RANKING-MODEL-个性化的重排模型-PRM"><a href="#4-PERSONALIZED-RE-RANKING-MODEL-个性化的重排模型-PRM" class="headerlink" title="4 PERSONALIZED RE-RANKING MODEL (个性化的重排模型 PRM)"></a>4 PERSONALIZED RE-RANKING MODEL (个性化的重排模型 PRM)</h2><h3 id="4-1-Model-Architecture-模型结构"><a href="#4-1-Model-Architecture-模型结构" class="headerlink" title="4.1 Model Architecture(模型结构)"></a>4.1 Model Architecture(模型结构)</h3><p>整体模型结构包含输入层、编码层、输出层。输入层为精排输入的item列表，输出层结果为重排之后的item列表。<br><img src="https://rxk-1300064984.cos.ap-nanjing.myqcloud.com/img/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20230107235918.png" alt></p>
+<h3 id="4-2-Input-Layer-输入层"><a href="#4-2-Input-Layer-输入层" class="headerlink" title="4.2  Input Layer (输入层)"></a>4.2  Input Layer (输入层)</h3><p><strong>Personalized Vector (PV ).个性化向量</strong><br>尽管精排队列给出的列表已经有部分个性化结果了，但对于整个用户的个性化结果来说，还不够。本文拼接原始的特征向量X与用户个性化的向量PV(图1b)，从而重排阶段引入用户个性化。</p>
+<p><strong>Position Embedding (PE).位置向量</strong>为了利用精排队列中的items的序列信息，本文引入位置编码向量PE(可学习)，使用方式与[X;PV]+PE。</p>
+<p>在输入向量之后使用FFN进行编码与维度转换，得到图1b中输入层最后的e。</p>
+<h3 id="4-3-Encoding-Layer-编码层"><a href="#4-3-Encoding-Layer-编码层" class="headerlink" title="4.3 Encoding Layer(编码层)"></a>4.3 Encoding Layer(编码层)</h3><p>编码层目的是学习items对与额外信息(用户偏好、items初始列表)之间的交互(图1a)。本文使用N层Transformer进行编码，主要考虑到了TRM的并行，self-attention不会依赖item之间的距离等因素。</p>
+<p>从图1a可以看出，本文使用的Transformer block与原论文基本一致，也是用到了Multi-head Self-Attention，FFN等结构。</p>
+<h3 id="4-4-Output-Layer-输出层"><a href="#4-4-Output-Layer-输出层" class="headerlink" title="4.4 Output Layer(输出层)"></a>4.4 Output Layer(输出层)</h3><p>输出层目标是为每个item打出一个重排得分，此处最终使用softmax函数进行输出。输出结果为点击每个item的概率。</p>
+<p>训练模型时，本文使用点击相关数据完成训练，最终损失函数为交叉熵。<br><img src="https://rxk-1300064984.cos.ap-nanjing.myqcloud.com/img/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20230108175740.png" alt></p>
+<h3 id="4-5-Personalized-Module-个性化模块"><a href="#4-5-Personalized-Module-个性化模块" class="headerlink" title="4.5 Personalized Module(个性化模块)"></a>4.5 Personalized Module(个性化模块)</h3><p>直观来说，可以直接用PRM来端到端学习用户个性化向量PV，然而在重排阶段学习PV，缺少了用户的通用偏好信息，因此本文使用预训练模型生成用户个性化向量(图1c)。输入为用户的点击序列items(H)，当前item与用户user的信息(性别、年龄、购买力等)，训练数据仍然使用点击数据。损失函数为二分类交叉熵。最终取sigmoid之前层网络的输出结果作为用户个性化向量PV。</p>
+<p>由于是CTR任务，当然作者也建议使用FM、FFM、DeepFM、DCN、FFN、PNN等用来学习PV。</p>
+<h2 id="5-EXPERIMENTAL-RESUTLS-实验结果"><a href="#5-EXPERIMENTAL-RESUTLS-实验结果" class="headerlink" title="5 EXPERIMENTAL RESUTLS (实验结果)"></a>5 EXPERIMENTAL RESUTLS (实验结果)</h2><p><strong>数据集:</strong></p>
+<ul>
+<li>Yahoo Letor dataset.</li>
+<li>E-commerce Re-ranking dataset. (本文提出)</li>
+</ul>
+<p><strong>Baselines:</strong></p>
+<ul>
+<li>LTR模型：<ul>
+<li>SVMRank，训练方式pairwise</li>
+<li>LambdaMart，训练方式listwise</li>
+<li>DNN-based LTR，训练方式pointwise</li>
+<li>Re-ranking模型<ul>
+<li>DLCM，使用GRU去编码全局信息</li>
+<li>GlobalRerank，使用基于RNN、attention的decoder</li>
+<li>Seq2Slate，使用point network去生成重排列表<br>由于GlobalRerank、Seq2Slate时间复杂度高，无法并行处理，无法线上实时响应，本文重排模型仅使用DLCM作为基线对比。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>Metrics:</strong></p>
+<ul>
+<li>离线<ul>
+<li>Precision@k </li>
+<li>MAP@k</li>
+</ul>
+</li>
+<li>在线ab<ul>
+<li>PV (items曝光数)</li>
+<li>IPV (items点击数)</li>
+<li>CTR (点击率)</li>
+<li>GMV (商品交易额)</li>
+</ul>
+</li>
+</ul>
+<p><strong>结果</strong></p>
+<p><em>离线：</em><br><img src="https://rxk-1300064984.cos.ap-nanjing.myqcloud.com/img/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20230108181956.png" alt></p>
+<p><img src="https://rxk-1300064984.cos.ap-nanjing.myqcloud.com/img/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20230108182042.png" alt></p>
+<p><em>在线ab:</em><br><img src="https://rxk-1300064984.cos.ap-nanjing.myqcloud.com/img/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20230108182118.png" alt></p>
+<h2 id="6-CONCLUSION-AND-FUTURE-WORK"><a href="#6-CONCLUSION-AND-FUTURE-WORK" class="headerlink" title="6 CONCLUSION AND FUTURE WORK"></a>6 CONCLUSION AND FUTURE WORK</h2><p>在读论文时，确实有个疑惑是PRM可能多样性考虑不足，这一点也是作者未来的展望，希望在学习重排结果时，不会破坏原有的多样性结果。</p>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">CinKate</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://renxingkai.github.io/2023/01/09/prm/">http://renxingkai.github.io/2023/01/09/prm/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/重排/">重排</a></div><div class="social-share pull-right" data-disabled="google,facebook"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js@1.0.16/dist/js/social-share.min.js"></script><nav id="pagination"><div class="next-post pull-right"><a href="/2022/12/03/lert/"><span>LERT A Linguistically-motivated Pre-trained Language Model 阅读笔记</span><i class="fa fa-chevron-right"></i></a></div></nav></div></div><footer class="footer-bg" style="background-image: url(http://p17.qhimg.com/d/_open360/fengjing0403/21.jpg)"><div class="layout" id="footer"><div class="copyright">&copy;2019 - 2023 By CinKate</div><div class="framework-info"><span>Driven - </span><a href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>Theme - </span><a href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="footer_custom_text">Hi, welcome to my <a href="https://renxingkai.github.io">blog</a>!</div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file-o"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.9.0"></script><script src="/js/fancybox.js?version=1.9.0"></script><script src="/js/sidebar.js?version=1.9.0"></script><script src="/js/copy.js?version=1.9.0"></script><script src="/js/fireworks.js?version=1.9.0"></script><script src="/js/transition.js?version=1.9.0"></script><script src="/js/scroll.js?version=1.9.0"></script><script src="/js/head.js?version=1.9.0"></script><script type="text/x-mathjax-config">MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+    processEscapes: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+  },
+  CommonHTML: {
+    linebreaks: { automatic: true, width: "90% container" }
+  },
+  "HTML-CSS": { 
+    linebreaks: { automatic: true, width: "90% container" }
+  },
+  "SVG": { 
+    linebreaks: { automatic: true, width: "90% container" }
+  }
+});
+</script><script type="text/x-mathjax-config">MathJax.Hub.Queue(function() {
+  var all = MathJax.Hub.getAllJax(), i;
+  for (i=0; i < all.length; i += 1) {
+    all[i].SourceElement().parentNode.className += ' has-jax';
+  }
+});
+</script><script src="https://cdn.jsdelivr.net/npm/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css"><script src="/js/katex.js"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script></body></html>
